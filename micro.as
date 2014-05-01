@@ -1,0 +1,209 @@
+﻿package 
+{
+
+	/* INDICE:
+	 IMPORT
+	 VARIABLES
+	 INICIO
+	 BARRACA
+	 ASERRADERO
+	 CLIENTES
+	*/
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.events.Event;
+	import flash.display.MovieClip;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
+	import flash.display.SimpleButton;
+	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
+	import flash.text.*;
+
+	public class micro extends MovieClip
+	{
+		public var _timer:Timer = new Timer(1000);// se ejecuta cada un segundo
+		public var _timer_golpe:Timer = new Timer(400,1);// definimos cuanto es el tiempo de mareo
+		private var _tiempo_jugado:uint = 0;
+		private var _tiempo_para_jugar:uint = 50;// definir el tiempo total aca
+
+
+		public var cala_little_var = 0;
+		public var cala_big_var = 0;
+		public var Pintura_var = 0;
+
+		//variables botones stage
+
+		public var Dinero_var = 12000;
+		public var Comunidad_var = 600;
+		public var Dia_var = 1;
+		public var Semana_var = 1;
+		public var Hora_var = 1;
+
+		//variables compras
+
+		var Alfajias_var_Numb:Number = 0;
+		var Tablones_var_Numb:Number = 0;
+		var Resultado_Maderas_var = 0;
+
+		//precios
+
+		var Alfajias_precio = 100;
+		var Tablones_precio = 300;
+		var Caladora_precio = 1000;
+		var Taladro_banco_precio = 3000;
+		var Cafetera_precio = 1500;
+
+		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
+		var Eleccion_Trabajos:Array = new Array();
+		var Silla:Array = new Array(500,1,1,4,0);
+		var Cama:Array = new Array(1200,2,2,8,0);
+		var Mesa:Array = new Array(1000,2,3,8,0);
+
+		// array de trabajos
+		var Trabajos:Array = new Array ();
+
+		// Super inicio de todo
+
+		public function micro()
+		{
+			_timer.start();
+			init();
+		}
+
+
+		public function init():void
+		{
+			Dinero.text = String(Dinero_var);
+			Comunidad.text = String(Comunidad_var);
+			Horas.text = String(Hora_var) + "  horas";
+			Semana.text = "Semana " + String(Semana_var);
+			Dia.text = "Dia " + String(Dia_var);
+			// herramientas
+			cala_big.visible = false;
+			cala_little.visible = false;
+			Cafetera_Chica.visible = false;
+			Caladora_de_Pie.visible = false;
+			Combinada_MC.visible = false;
+			Lata_Pintura_MC.visible = false;
+			//pantallas
+			Barra.visible = false;
+			Madera_MC.visible = false;
+			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
+			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
+			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
+			_timer.addEventListener(TimerEvent.TIMER, timerListener);
+
+			
+		}
+		function timerListener(e:TimerEvent):void
+		{
+			var tiempost = _timer.currentCount
+			trace(tiempost);
+		}
+
+		//Barraca
+		public function En_Barraca(event:MouseEvent):void
+		{
+			Barra.visible = true;
+			Barra.Taladro_Pie.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Taladro_Pie);
+			Barra.Caladora_Mano.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Caladora);
+			Barra.Lata_Pintura.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Pintura);
+			Barra.Cafetera_Chica.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Cafetera_Chica);
+			Barra.Mesa_Combinada.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Mesa_Combinada);
+			Barra.Sierra_Pie.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Sierra_Pie);
+
+
+		}
+
+
+
+		public function Comprar_Caladora(event:MouseEvent):void
+		{
+			cala_little.visible = true;
+			Dinero_var = Dinero_var - Caladora_precio;
+			Dinero.text = String(Dinero_var);
+			Barra.visible = false;
+			cala_little_var = 1;
+		}
+
+		public function Comprar_Sierra_Pie(event:MouseEvent):void
+		{
+			Caladora_de_Pie.visible = true;
+			Barra.visible = false;
+			cala_little_var = 1;
+		}
+
+		public function Comprar_Pintura(event:MouseEvent):void
+		{
+			Lata_Pintura_MC.visible = true;
+			Barra.visible = false;
+			Pintura_var = 1;
+		}
+
+		public function Comprar_Cafetera_Chica(event:MouseEvent):void
+		{
+			Cafetera_Chica.visible = true;
+			Dinero_var = Dinero_var - Cafetera_precio;
+			Dinero.text = String(Dinero_var);
+			Barra.visible = false;
+			cala_big_var = 1;
+		}
+
+		public function Comprar_Mesa_Combinada(event:MouseEvent):void
+		{
+			Combinada_MC.visible = true;
+			Barra.visible = false;
+			cala_big_var = 1;
+		}
+
+		public function Comprar_Taladro_Pie(event:MouseEvent):void
+		{
+			cala_big.visible = true;
+			Barra.visible = false;
+			cala_big_var = 1;
+		}
+
+
+		// Aserradero
+
+		public function En_Madera(event:MouseEvent):void
+		{
+			Madera_MC.visible = true;
+			Madera_MC.Alfajias_Ingreso.text = "";
+			Madera_MC.Tablones_Ingreso.text = "";
+			Madera_MC.Resultado_Madera_BT.addEventListener(MouseEvent.MOUSE_DOWN, Resultado_Madera);
+
+
+		}
+
+		public function Resultado_Madera(mc:MouseEvent):void
+		{
+			Alfajias_var_Numb = Number(Madera_MC.Alfajias_Ingreso.text);
+			Tablones_var_Numb = Number(Madera_MC.Tablones_Ingreso.text);
+			var Alfajias_var_compra = Alfajias_var_Numb * Alfajias_precio;
+			var Tablones_var_compra = Tablones_var_Numb * Tablones_precio;
+			//Resultado_Maderas_var = Alfajias_var_Numb + Tablones_var_Numb;
+			trace(Alfajias_var_compra + Tablones_var_compra);
+			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
+			Dinero.text = String(Dinero_var);
+			Madera_MC.visible = false;
+
+		}
+		// Clientes
+
+		public function Clientes_Pedido(event:MouseEvent):void
+		{
+			trace(Silla);
+			var coso = Silla[0];
+			trace(coso);
+		}
+		// Trabajos
+
+
+
+
+	}
+
+}
