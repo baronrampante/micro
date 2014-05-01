@@ -24,7 +24,7 @@
 	public class micro extends MovieClip
 	{
 		public var _timer:Timer = new Timer(1000);// se ejecuta cada un segundo
-		public var _timer_golpe:Timer = new Timer(400,1);// definimos cuanto es el tiempo de mareo
+		public var _timer_trabajo:Timer = new Timer(Tiempo_construccion);// definimos cuanto es el tiempo de mareo
 		private var _tiempo_jugado:uint = 0;
 		private var _tiempo_para_jugar:uint = 50;// definir el tiempo total aca
 
@@ -63,6 +63,7 @@
 
 		// array de trabajos
 		var Trabajos:Array = new Array ();
+		var Tiempo_construccion = 1000;
 
 		// Super inicio de todo
 
@@ -95,7 +96,9 @@
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
 			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
 			// timer
+			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
+			
 //Timer
 			
 		}
@@ -105,6 +108,7 @@
 			trace(tiempost);
 			Hora_var = _timer.currentCount
 			Horas.text = String(_timer.currentCount) + "  horas";
+			trace(_timer_trabajo.currentCount);
 		}
 
 		//Barraca
@@ -206,8 +210,22 @@
 		// Trabajos
 		public function fnTrabajos(event:MouseEvent):void
 		{
-			trace(Silla);
+			//trace(Silla);
+			Trabajos [1] = Silla [0];
 			
+		
+			_timer_trabajo.start();
+			
+			
+		}
+		function timerListenerTrabajos(e:TimerEvent):void 
+		{
+			var _hora_trabajo = _timer_trabajo.currentCount;
+			
+			if (_hora_trabajo == Silla [3])
+			{
+				trace ("laburo");
+			}
 		}
 
 
