@@ -77,7 +77,7 @@
 		{
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = String(Comunidad_var);
-			Horas.text = String(Hora_var) + "  horas";
+			Horas.text = String(_timer.currentCount) + "  horas";
 			Semana.text = "Semana " + String(Semana_var);
 			Dia.text = "Dia " + String(Dia_var);
 			// herramientas
@@ -93,14 +93,18 @@
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
+			// timer
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
-
+//Timer
 			
 		}
 		function timerListener(e:TimerEvent):void
 		{
 			var tiempost = _timer.currentCount
 			trace(tiempost);
+			Hora_var = _timer.currentCount
+			Horas.text = String(_timer.currentCount) + "  horas";
+			
 		}
 
 		//Barraca
