@@ -93,6 +93,7 @@
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
+			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
 			// timer
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 //Timer
@@ -104,7 +105,6 @@
 			trace(tiempost);
 			Hora_var = _timer.currentCount
 			Horas.text = String(_timer.currentCount) + "  horas";
-			
 		}
 
 		//Barraca
@@ -204,6 +204,11 @@
 			trace(coso);
 		}
 		// Trabajos
+		public function fnTrabajos(event:MouseEvent):void
+		{
+			trace(Silla);
+			
+		}
 
 
 
