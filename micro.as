@@ -20,6 +20,9 @@
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import flash.text.*;
+	import fl.transitions.Tween;
+	import fl.transitions.easing.*;
+	import fl.transitions.TweenEvent;
 
 	public class micro extends MovieClip
 	{
@@ -122,6 +125,7 @@
 		//Barraca
 		public function En_Barraca(event:MouseEvent):void
 		{
+			Lista_Trabajos.visible = false;
 			Barra.visible = true;
 			Barra.Taladro_Pie.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Taladro_Pie);
 			Barra.Caladora_Mano.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Caladora);
@@ -129,11 +133,7 @@
 			Barra.Cafetera_Chica.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Cafetera_Chica);
 			Barra.Mesa_Combinada.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Mesa_Combinada);
 			Barra.Sierra_Pie.addEventListener(MouseEvent.MOUSE_DOWN, Comprar_Sierra_Pie);
-
-
 		}
-
-
 
 		public function Comprar_Caladora(event:MouseEvent):void
 		{
@@ -186,14 +186,29 @@
 
 		public function En_Madera(event:MouseEvent):void
 		{
+			Lista_Trabajos.visible = false;
 			Madera_MC.visible = true;
 			Madera_MC.Alfajias_Ingreso.text = "";
 			Madera_MC.Tablones_Ingreso.text = "";
 			Madera_MC.Resultado_Madera_BT.addEventListener(MouseEvent.MOUSE_DOWN, Resultado_Madera);
+			Madera_MC.Resultado_Madera_BT2.addEventListener(MouseEvent.MOUSE_DOWN, Total_Madera);
 
 
 		}
 
+		public function Total_Madera(mc:MouseEvent):void
+		{
+			Alfajias_var_Numb = Number(Madera_MC.Alfajias_Ingreso.text);
+			Tablones_var_Numb = Number(Madera_MC.Tablones_Ingreso.text);
+			var Alfajias_var_compra = Alfajias_var_Numb * Alfajias_precio;
+			var Tablones_var_compra = Tablones_var_Numb * Tablones_precio;
+			//Resultado_Maderas_var = Alfajias_var_Numb + Tablones_var_Numb;
+			trace(Alfajias_var_compra + Tablones_var_compra);
+			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
+			Madera_MC.Total_TX.text = String(Alfajias_var_compra + Tablones_var_compra);
+			//Madera_MC.visible = false;
+		}
+		
 		public function Resultado_Madera(mc:MouseEvent):void
 		{
 			Alfajias_var_Numb = Number(Madera_MC.Alfajias_Ingreso.text);
@@ -205,8 +220,8 @@
 			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
 			Dinero.text = String(Dinero_var);
 			Madera_MC.visible = false;
-
 		}
+		
 		// Clientes
 
 		public function Clientes_Pedido(event:MouseEvent):void
@@ -221,11 +236,12 @@
 			Lista_Trabajos.visible = true;
 		}
 
-		public function fnAceptarLaburo (event:MouseEvent):void
+		public function fnAceptarLaburo(event:MouseEvent):void
 		{
 			Trabajos[1] = Silla[0];
 			_timer_trabajo.start();
 			Trabajo_en_Curso = true;// flag
+			var myTween:Tween = new Tween(Lista_Trabajos.my_box, "x", None.easeInOut, 40, 300, Silla[3], true);
 		}
 
 
@@ -241,7 +257,7 @@
 				trace("laburo");// pa probar
 				_timer_trabajo.stop();
 				_timer_trabajo.reset();
-				Lista_Trabajos.visible = false;//placa
+				
 				Trabajo_en_Curso = false;//flag
 				Dinero_var = Silla[0] + Dinero_var;
 				Dinero.text = String(Dinero_var);
