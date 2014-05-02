@@ -57,13 +57,16 @@
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
-		var Silla:Array = new Array(500,1,1,4,0);
+		var Silla:Array = new Array(500,1,1,8,0);
 		var Cama:Array = new Array(1200,2,2,8,0);
 		var Mesa:Array = new Array(1000,2,3,8,0);
 
 		// array de trabajos
 		var Trabajos:Array = new Array ();
 		var Tiempo_construccion = 1000;
+
+		// flags
+		var Trabajo_en_Curso = false;
 
 		// Super inicio de todo
 
@@ -89,25 +92,30 @@
 			Combinada_MC.visible = false;
 			Lata_Pintura_MC.visible = false;
 			//pantallas
+			Lista_Trabajos.visible = false;
 			Barra.visible = false;
 			Madera_MC.visible = false;
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
-			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
-			// timer
+			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
+			Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
+
+			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
-			
-//Timer
-			
+
+			//Timer
+
 		}
 		function timerListener(e:TimerEvent):void
 		{
-			var tiempost = _timer.currentCount
+			var tiempost = _timer.currentCount;
 			trace(tiempost);
-			Hora_var = _timer.currentCount
+			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
+			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
 			trace(_timer_trabajo.currentCount);
 		}
 
@@ -210,26 +218,41 @@
 		// Trabajos
 		public function fnTrabajos(event:MouseEvent):void
 		{
-			//trace(Silla);
-			Trabajos [1] = Silla [0];
-			
-		
-			_timer_trabajo.start();
-			
-			
+			Lista_Trabajos.visible = true;
 		}
-		function timerListenerTrabajos(e:TimerEvent):void 
+
+		public function fnAceptarLaburo (event:MouseEvent):void
+		{
+			Trabajos[1] = Silla[0];
+			_timer_trabajo.start();
+			Trabajo_en_Curso = true;// flag
+		}
+
+
+		// se fija si laburo se termino
+
+		function timerListenerTrabajos(e:TimerEvent):void
 		{
 			var _hora_trabajo = _timer_trabajo.currentCount;
-			
+
+
 			if (_hora_trabajo == Silla [3])
 			{
-				trace ("laburo");
+				trace("laburo");// pa probar
+				_timer_trabajo.stop();
+				_timer_trabajo.reset();
+				Lista_Trabajos.visible = false;//placa
+				Trabajo_en_Curso = false;//flag
+				Dinero_var = Silla[0] + Dinero_var;
+				Dinero.text = String(Dinero_var);
+
 			}
 		}
 
-
-
+		public function fnCerrarLista(event:MouseEvent):void
+		{
+			Lista_Trabajos.visible = false;
+		}
 
 	}
 
