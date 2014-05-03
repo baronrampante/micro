@@ -41,11 +41,13 @@
 		public var Dinero_var = 12000;
 		public var Comunidad_var = 600;
 		public var Dia_var = 0;
-		public var Semana_var = 1;
+		public var Semana_var = 0;
 		public var Hora_var = 1;
-		public var Hora_Dia_var = 0; // se incrementa cada hora
-		public var Horas_para_Dia = 10; // variable que determina el día
-		public var Dias_para_Semana = 5 // variable que determina duracion semana
+		public var Hora_Dia_var = 0;// se incrementa cada hora
+		public var Horas_para_Dia = 3;// variable que determina el día
+		public var Dias_para_Semana = 5;// variable que determina duracion semana
+		public var Dia_Semana = 0;// variable que cuenta los dias para llegar a a la semana
+
 
 		//variables compras
 
@@ -60,7 +62,7 @@
 		var Caladora_precio = 1000;
 		var Taladro_banco_precio = 3000;
 		var Cafetera_precio = 1500;
-		
+
 		//Clientes
 		var Nuevo_Cliente = 0;
 
@@ -84,7 +86,7 @@
 			_timer.start();
 			init();
 		}
-		
+
 		// Genera un random
 		public function randomRange(minNum:Number, maxNum:Number):Number
 		{
@@ -99,6 +101,16 @@
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Semana.text = "Semana " + String(Semana_var);
 			Dia.text = "Dia " + String(Dia_var);
+
+			//clientes
+			Placa_Clientes.Mormon_MC.visible = false;
+			Placa_Clientes.Vieja_MC.visible = false;
+			Placa_Clientes.Nena_MC.visible = false;
+			Placa_Clientes.Coqueta_MC.visible = false;
+			Placa_Clientes.Punk_MC.visible = false;
+			Placa_Clientes.Viejo_MC.visible = false;
+
+
 			// herramientas
 			cala_big.visible = false;
 			cala_little.visible = false;
@@ -106,13 +118,16 @@
 			Caladora_de_Pie.visible = false;
 			Combinada_MC.visible = false;
 			Lata_Pintura_MC.visible = false;
+
 			//pantallas
 			Placa_Clientes.visible = false;
 			Lista_Trabajos.visible = false;
 			Barra.visible = false;
 			Madera_MC.visible = false;
+
 			//clientes creación
 			fnClientes();
+
 			//botones
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
@@ -125,7 +140,8 @@
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 
-			//Timer
+
+			//Timer general Todos los eventos determinados por el tiempo
 
 		}
 		function timerListener(e:TimerEvent):void
@@ -136,36 +152,73 @@
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
 			trace(_timer_trabajo.currentCount);
+			// dia
 			Hora_Dia_var = Hora_Dia_var + 1;
 			if (Hora_Dia_var == Horas_para_Dia)
 			{
 				Dia_var = Dia_var + 1;
 				Hora_Dia_var = 0;
 				Dia.text = "Dia " + String(Dia_var);
+				// semana
+				Dia_Semana = Dia_Semana + 1;
+				if (Dia_Semana == Dias_para_Semana)
+				{
+					Semana_var = Semana_var + 1;
+					Dia_Semana = 0;
+					Semana.text = "Semana " + String(Semana_var);
+				}
 			}
 			fnClientes();
 		}
-		
+
+
 		//Clientes
-		
-		
+		// función random para la creacion del cliente
+
 		function fnClientes():void
 		{
 			if (Hora_var == 10)
 			{
-			Nuevo_Cliente =((randomRange(1,5)));
-			Placa_Clientes.visible = true;
-			trace ("Cliente= " + Nuevo_Cliente);
+				Nuevo_Cliente =((randomRange(1,5)));
+				Placa_Clientes.visible = true;
+				fnCliente_Actual();
+				trace("Cliente= " + Nuevo_Cliente);
 			}
 		}
 		
+		// selección de cliente
+		function fnCliente_Actual():void
+		{
+			switch (Nuevo_Cliente)
+			{
+				case 1:
+				Placa_Clientes.Mormon_MC.visible = true;
+				break;
+				case 2:
+				Placa_Clientes.Vieja_MC.visible = true;
+				break;
+				case 3:
+				Placa_Clientes.Nena_MC.visible = true;
+				break;
+				case 4:
+				Placa_Clientes.Coqueta_MC.visible = true;
+				break;
+				case 5:
+				Placa_Clientes.Punk_MC.visible = false;
+				break;
+				case 6:
+				Placa_Clientes.Viejo_MC.visible = false;
+				break;
+			}
+		}
+
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
 			trace(Silla);
 			var coso = Silla[0];
 			trace(coso);
-			Placa_Clientes.visible// = false;
+			Placa_Clientes.visible = false;
 		}
 
 		//Barraca
@@ -254,7 +307,7 @@
 			Madera_MC.Total_TX.text = String(Alfajias_var_compra + Tablones_var_compra);
 			//Madera_MC.visible = false;
 		}
-		
+
 		public function Resultado_Madera(mc:MouseEvent):void
 		{
 			Alfajias_var_Numb = Number(Madera_MC.Alfajias_Ingreso.text);
@@ -267,8 +320,8 @@
 			Dinero.text = String(Dinero_var);
 			Madera_MC.visible = false;
 		}
-		
-		
+
+
 		// Trabajos
 		public function fnTrabajos(event:MouseEvent):void
 		{
@@ -280,7 +333,7 @@
 			Trabajos[1] = Silla[0];
 			_timer_trabajo.start();
 			Trabajo_en_Curso = true;// flag
-			var myTween:Tween = new Tween(Lista_Trabajos.my_box, "x", None.easeInOut, 40, 300, Silla[3], true);
+			var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Silla[3],true);
 		}
 
 
@@ -296,7 +349,7 @@
 				trace("laburo");// pa probar
 				_timer_trabajo.stop();
 				_timer_trabajo.reset();
-				
+
 				Trabajo_en_Curso = false;//flag
 				Dinero_var = Silla[0] + Dinero_var;
 				Dinero.text = String(Dinero_var);
