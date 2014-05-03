@@ -65,12 +65,16 @@
 
 		//Clientes
 		var Nuevo_Cliente = 0;
+		var Producto_var = "Silla";
+		
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
-		var Silla:Array = new Array(500,1,1,8,0);
-		var Cama:Array = new Array(1200,2,2,8,0);
-		var Mesa:Array = new Array(1000,2,3,8,0);
+		var Silla:Array = new Array(500,1,1,8,0,"necesito me arregles la silla","34");
+		var Cama:Array = new Array(1200,2,2,8,0, "necesito me arregles la cama","34");
+		var Mesa:Array = new Array(1000,2,3,8,0, "necesito me arregles la mesa","34");
+		var Elementos:Array = new Array(Silla, Mesa, Cama);
+		var nombre = 0;// pasa el valor del array de productos Elementos
 
 		// array de trabajos
 		var Trabajos:Array = new Array ();
@@ -96,6 +100,7 @@
 
 		public function init():void
 		{
+			trace (Producto_var);
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = String(Comunidad_var);
 			Horas.text = String(_timer.currentCount) + "  horas";
@@ -189,27 +194,55 @@
 		// selección de cliente
 		function fnCliente_Actual():void
 		{
+			var Cliente_Texto =((randomRange(5,6))); // elige el texto del array
+			var nombre_numero =((randomRange(0,2)));
+			nombre = Elementos[nombre_numero];
 			switch (Nuevo_Cliente)
 			{
 				case 1:
 				Placa_Clientes.Mormon_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				fnTexto_Pedido();
 				break;
 				case 2:
 				Placa_Clientes.Vieja_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				//Placa_Clientes.Tablones_TXT.text = Silla [0];
+				fnTexto_Pedido();
 				break;
 				case 3:
 				Placa_Clientes.Nena_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				//Placa_Clientes.Tablones_TXT.text = Silla [0];
+				fnTexto_Pedido();
 				break;
 				case 4:
 				Placa_Clientes.Coqueta_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				//Placa_Clientes.Tablones_TXT.text = Silla [0];
+				fnTexto_Pedido();
 				break;
 				case 5:
-				Placa_Clientes.Punk_MC.visible = false;
+				Placa_Clientes.Punk_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				//Placa_Clientes.Tablones_TXT.text = Silla [0];
+				fnTexto_Pedido();
 				break;
 				case 6:
-				Placa_Clientes.Viejo_MC.visible = false;
+				Placa_Clientes.Viejo_MC.visible = true;
+				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
+				//Placa_Clientes.Tablones_TXT.text = Silla [0];
+				fnTexto_Pedido();
 				break;
 			}
+		}
+		
+		function fnTexto_Pedido():void
+		{
+			
+			Placa_Clientes.Precio_TXT.text = nombre[0];
+				Placa_Clientes.Alfajias_TXT.text = nombre[1];
+				Placa_Clientes.Tablones_TXT.text = nombre[2];
 		}
 
 
