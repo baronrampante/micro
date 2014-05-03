@@ -40,9 +40,12 @@
 
 		public var Dinero_var = 12000;
 		public var Comunidad_var = 600;
-		public var Dia_var = 1;
+		public var Dia_var = 0;
 		public var Semana_var = 1;
 		public var Hora_var = 1;
+		public var Hora_Dia_var = 0; // se incrementa cada hora
+		public var Horas_para_Dia = 10; // variable que determina el día
+		public var Dias_para_Semana = 5 // variable que determina duracion semana
 
 		//variables compras
 
@@ -57,6 +60,9 @@
 		var Caladora_precio = 1000;
 		var Taladro_banco_precio = 3000;
 		var Cafetera_precio = 1500;
+		
+		//Clientes
+		var Nuevo_Cliente = 0;
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
@@ -78,6 +84,12 @@
 			_timer.start();
 			init();
 		}
+		
+		// Genera un random
+		public function randomRange(minNum:Number, maxNum:Number):Number
+		{
+			return (Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum);
+		}
 
 
 		public function init():void
@@ -95,9 +107,13 @@
 			Combinada_MC.visible = false;
 			Lata_Pintura_MC.visible = false;
 			//pantallas
+			Placa_Clientes.visible = false;
 			Lista_Trabajos.visible = false;
 			Barra.visible = false;
 			Madera_MC.visible = false;
+			//clientes creación
+			fnClientes();
+			//botones
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
@@ -120,6 +136,36 @@
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
 			trace(_timer_trabajo.currentCount);
+			Hora_Dia_var = Hora_Dia_var + 1;
+			if (Hora_Dia_var == Horas_para_Dia)
+			{
+				Dia_var = Dia_var + 1;
+				Hora_Dia_var = 0;
+				Dia.text = "Dia " + String(Dia_var);
+			}
+			fnClientes();
+		}
+		
+		//Clientes
+		
+		
+		function fnClientes():void
+		{
+			if (Hora_var == 10)
+			{
+			Nuevo_Cliente =((randomRange(1,5)));
+			Placa_Clientes.visible = true;
+			trace ("Cliente= " + Nuevo_Cliente);
+			}
+		}
+		
+
+		public function Clientes_Pedido(event:MouseEvent):void
+		{
+			trace(Silla);
+			var coso = Silla[0];
+			trace(coso);
+			Placa_Clientes.visible// = false;
 		}
 
 		//Barraca
@@ -222,14 +268,7 @@
 			Madera_MC.visible = false;
 		}
 		
-		// Clientes
-
-		public function Clientes_Pedido(event:MouseEvent):void
-		{
-			trace(Silla);
-			var coso = Silla[0];
-			trace(coso);
-		}
+		
 		// Trabajos
 		public function fnTrabajos(event:MouseEvent):void
 		{
