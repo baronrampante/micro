@@ -35,6 +35,11 @@
 		public var cala_little_var = 0;
 		public var cala_big_var = 0;
 		public var Pintura_var = 0;
+		
+		//hijos
+		
+		var Empezar_Laburo_BT:Empezar_BT = new Empezar_BT();
+		
 
 		//variables botones stage
 
@@ -44,7 +49,7 @@
 		public var Semana_var = 0;
 		public var Hora_var = 1;
 		public var Hora_Dia_var = 0;// se incrementa cada hora
-		public var Horas_para_Dia = 3;// variable que determina el día
+		public var Horas_para_Dia = 12;// variable que determina el día
 		public var Dias_para_Semana = 5;// variable que determina duracion semana
 		public var Dia_Semana = 0;// variable que cuenta los dias para llegar a a la semana
 
@@ -80,6 +85,7 @@
 		// array de trabajos
 		var Trabajos:Array = new Array ();
 		var Tiempo_construccion = 1000;
+		var Tiempo_total_arreglo = 0;
 
 		// flags
 		var Trabajo_en_Curso = false;
@@ -157,7 +163,8 @@
 			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
-			trace(_timer_trabajo.currentCount);
+			trace("avance laburo" + _timer_trabajo.currentCount);
+			trace ("tiempo  " + Tiempo_total_arreglo);
 			// dia
 			Hora_Dia_var = Hora_Dia_var + 1;
 			if (Hora_Dia_var == Horas_para_Dia)
@@ -207,7 +214,7 @@
 			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
 			var nombre_numero =((randomRange(0,2)));// elige el producto del array
 			nombre = Elementos[nombre_numero];
-			trace(nombre);
+			//trace(nombre);
 			Viejo_Cliente = Nuevo_Cliente
 			switch (Nuevo_Cliente)
 			{
@@ -266,6 +273,7 @@
 			Placa_Clientes.Vieja_MC.visible = false;
 			Placa_Clientes.Viejo_MC.visible = false;
 			Placa_Clientes.Coqueta_MC.visible = false;
+			Tiempo_total_arreglo = nombre[3];
 		}
 
 		//Barraca
@@ -362,7 +370,7 @@
 			var Alfajias_var_compra = Alfajias_var_Numb * Alfajias_precio;
 			var Tablones_var_compra = Tablones_var_Numb * Tablones_precio;
 			//Resultado_Maderas_var = Alfajias_var_Numb + Tablones_var_Numb;
-			trace(Alfajias_var_compra + Tablones_var_compra);
+			//trace(Alfajias_var_compra + Tablones_var_compra);
 			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
 			Dinero.text = String(Dinero_var);
 			Madera_MC.visible = false;
@@ -377,10 +385,16 @@
 
 		public function fnAceptarLaburo(event:MouseEvent):void
 		{
-
-			_timer_trabajo.start();
-			Trabajo_en_Curso = true;// flag
-			var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,nombre[3],true);
+			if (Trabajo_en_Curso == false)
+			{
+				_timer_trabajo.start();
+				Lista_Trabajos.addChild(Empezar_Laburo_BT);
+				Empezar_Laburo_BT.x = -300;
+				Empezar_Laburo_BT.y = 0;
+				Trabajo_en_Curso = true;// flag
+				//Tiempo_total_arreglo = nombre [3];
+				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Tiempo_total_arreglo,true);
+			 }
 		}
 
 
@@ -389,18 +403,14 @@
 		function timerListenerTrabajos(e:TimerEvent):void
 		{
 			var _hora_trabajo = _timer_trabajo.currentCount;//variable local para comparar en el array
-
-
-			if (_hora_trabajo == nombre [3])
+			if (_hora_trabajo == Tiempo_total_arreglo)
 			{
 				trace("laburo");// pa probar
 				_timer_trabajo.stop();
 				_timer_trabajo.reset();
-
 				Trabajo_en_Curso = false;//flag
 				Dinero_var = Silla[0] + Dinero_var;
 				Dinero.text = String(Dinero_var);
-
 			}
 		}
 
