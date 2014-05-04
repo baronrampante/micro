@@ -65,15 +65,16 @@
 
 		//Clientes
 		var Nuevo_Cliente = 0;
+		var Viejo_Cliente = 100;
 		var Producto_var = "Silla";
-		
+
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
 		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio");
-		var Cama:Array = new Array(1200,2,2,12,"Cama", "necesito me arregles la cama","Que cojones");
-		var Mesa:Array = new Array(1000,2,3,8,"Mesa", "necesito me arregles la mesa","Que mierda");
-		var Elementos:Array = new Array(Silla, Mesa, Cama);
+		var Cama:Array = new Array(1200,2,2,12,"Cama","necesito me arregles la cama","Que cojones");
+		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda");
+		var Elementos:Array = new Array(Silla,Mesa,Cama);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
 
 		// array de trabajos
@@ -100,7 +101,7 @@
 
 		public function init():void
 		{
-			trace (Producto_var);
+			//trace(Producto_var);
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = String(Comunidad_var);
 			Horas.text = String(_timer.currentCount) + "  horas";
@@ -131,7 +132,7 @@
 			Madera_MC.visible = false;
 
 			//clientes creación
-			fnCrear_Clientes();
+			//fnCrear_Clientes();
 
 			//botones
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
@@ -145,14 +146,14 @@
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 
-
-			//Timer general Todos los eventos determinados por el tiempo
-
 		}
+		//Timer general Todos los eventos determinados por el tiempo
+
+
 		function timerListener(e:TimerEvent):void
 		{
 			var tiempost = _timer.currentCount;
-			trace(tiempost);
+			//trace(tiempost);
 			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
@@ -162,11 +163,13 @@
 			if (Hora_Dia_var == Horas_para_Dia)
 			{
 				_timer.reset();
+				// se resetea el timer del dia;
 				_timer.start();
+				fnCrear_Clientes();
 				Dia_var = Dia_var + 1;
 				Hora_Dia_var = 0;
 				Dia.text = "Dia " + String(Dia_var);
-				
+
 				// semana
 				Dia_Semana = Dia_Semana + 1;
 				if (Dia_Semana == Dias_para_Semana)
@@ -176,7 +179,7 @@
 					Semana.text = "Semana " + String(Semana_var);
 				}
 			}
-			fnCrear_Clientes();
+			
 		}
 
 
@@ -185,72 +188,84 @@
 
 		function fnCrear_Clientes():void
 		{
-			if (Hora_var == Horas_para_Dia)
+			//if (Hora_var == Horas_para_Dia)
+			//{
+			Nuevo_Cliente =((randomRange(0,5)));
+			if (Viejo_Cliente == Nuevo_Cliente)
 			{
-				Nuevo_Cliente =((randomRange(1,5)));
-				Placa_Clientes.visible = true;
-				fnCliente_Actual();
-				trace("Cliente= " + Nuevo_Cliente);
+				fnCrear_Clientes();
 			}
+			Placa_Clientes.visible = true;
+			fnCliente_Actual();
+			trace("Cliente= " + Nuevo_Cliente);
+			//}
 		}
-		
+
 		// selección de cliente
 		function fnCliente_Actual():void
 		{
-			var Cliente_Texto =((randomRange(5,6))); // elige el texto del array
-			var nombre_numero =((randomRange(0,2))); // elige el producto del array
+			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
+			var nombre_numero =((randomRange(0,2)));// elige el producto del array
 			nombre = Elementos[nombre_numero];
 			trace(nombre);
+			Viejo_Cliente = Nuevo_Cliente
 			switch (Nuevo_Cliente)
 			{
-				case 1:
-				Placa_Clientes.Mormon_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				fnTexto_Pedido();
-				break;
-				case 2:
-				Placa_Clientes.Vieja_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				fnTexto_Pedido();
-				break;
-				case 3:
-				Placa_Clientes.Nena_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				fnTexto_Pedido();
-				break;
-				case 4:
-				Placa_Clientes.Coqueta_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				fnTexto_Pedido();
-				break;
-				case 5:
-				Placa_Clientes.Punk_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				fnTexto_Pedido();
-				break;
-				case 6:
-				Placa_Clientes.Viejo_MC.visible = true;
-				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-								fnTexto_Pedido();
-				break;
+				case 0 :
+					Placa_Clientes.Mormon_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
+				case 1 :
+					Placa_Clientes.Vieja_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
+				case 2 :
+					Placa_Clientes.Nena_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
+				case 3 :
+					Placa_Clientes.Coqueta_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
+				case 4 :
+					Placa_Clientes.Punk_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
+				case 5 :
+					Placa_Clientes.Viejo_MC.visible = true;
+					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					fnTexto_Pedido();
+					break;
 			}
 		}
-		
+
 		function fnTexto_Pedido():void
 		{
-			
+
 			Placa_Clientes.Precio_TXT.text = "Precio  " + nombre[0];
 			Placa_Clientes.Alfajias_TXT.text = nombre[1];
 			Placa_Clientes.Tablones_TXT.text = nombre[2];
-			Placa_Clientes.Tiempo_para_Hacer_TXT.text = nombre[3]
+			Placa_Clientes.Tiempo_para_Hacer_TXT.text = nombre[3];
 		}
 
+		//boton de aceptar trabajo
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
 			Trabajos.push(nombre[4]);
-			trace (Trabajos);
+			trace(Trabajos);
 			Placa_Clientes.visible = false;
+			Placa_Clientes.Mormon_MC.visible = false;
+			Placa_Clientes.Nena_MC.visible = false;
+			Placa_Clientes.Punk_MC.visible = false;
+			Placa_Clientes.Vieja_MC.visible = false;
+			Placa_Clientes.Viejo_MC.visible = false;
+			Placa_Clientes.Coqueta_MC.visible = false;
 		}
 
 		//Barraca
@@ -334,7 +349,7 @@
 			var Alfajias_var_compra = Alfajias_var_Numb * Alfajias_precio;
 			var Tablones_var_compra = Tablones_var_Numb * Tablones_precio;
 			//Resultado_Maderas_var = Alfajias_var_Numb + Tablones_var_Numb;
-			trace(Alfajias_var_compra + Tablones_var_compra);
+			//trace(Alfajias_var_compra + Tablones_var_compra);
 			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
 			Madera_MC.Total_TX.text = String(Alfajias_var_compra + Tablones_var_compra);
 			//Madera_MC.visible = false;
@@ -362,7 +377,7 @@
 
 		public function fnAceptarLaburo(event:MouseEvent):void
 		{
-			
+
 			_timer_trabajo.start();
 			Trabajo_en_Curso = true;// flag
 			var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,nombre[3],true);
