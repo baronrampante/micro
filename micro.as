@@ -70,11 +70,11 @@
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
-		var Silla:Array = new Array(500,1,1,8,0,"necesito me arregles la silla","34");
-		var Cama:Array = new Array(1200,2,2,8,0, "necesito me arregles la cama","34");
-		var Mesa:Array = new Array(1000,2,3,8,0, "necesito me arregles la mesa","34");
+		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio");
+		var Cama:Array = new Array(1200,2,2,12,"Cama", "necesito me arregles la cama","Que cojones");
+		var Mesa:Array = new Array(1000,2,3,8,"Mesa", "necesito me arregles la mesa","Que mierda");
 		var Elementos:Array = new Array(Silla, Mesa, Cama);
-		var nombre = 0;// pasa el valor del array de productos Elementos
+		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
 
 		// array de trabajos
 		var Trabajos:Array = new Array ();
@@ -131,7 +131,7 @@
 			Madera_MC.visible = false;
 
 			//clientes creación
-			fnClientes();
+			fnCrear_Clientes();
 
 			//botones
 			Placa_Clientes.Yes_BT.addEventListener(MouseEvent.MOUSE_DOWN, Clientes_Pedido);
@@ -161,9 +161,12 @@
 			Hora_Dia_var = Hora_Dia_var + 1;
 			if (Hora_Dia_var == Horas_para_Dia)
 			{
+				_timer.reset();
+				_timer.start();
 				Dia_var = Dia_var + 1;
 				Hora_Dia_var = 0;
 				Dia.text = "Dia " + String(Dia_var);
+				
 				// semana
 				Dia_Semana = Dia_Semana + 1;
 				if (Dia_Semana == Dias_para_Semana)
@@ -173,16 +176,16 @@
 					Semana.text = "Semana " + String(Semana_var);
 				}
 			}
-			fnClientes();
+			fnCrear_Clientes();
 		}
 
 
 		//Clientes
 		// función random para la creacion del cliente
 
-		function fnClientes():void
+		function fnCrear_Clientes():void
 		{
-			if (Hora_var == 10)
+			if (Hora_var == Horas_para_Dia)
 			{
 				Nuevo_Cliente =((randomRange(1,5)));
 				Placa_Clientes.visible = true;
@@ -195,8 +198,9 @@
 		function fnCliente_Actual():void
 		{
 			var Cliente_Texto =((randomRange(5,6))); // elige el texto del array
-			var nombre_numero =((randomRange(0,2)));
+			var nombre_numero =((randomRange(0,2))); // elige el producto del array
 			nombre = Elementos[nombre_numero];
+			trace(nombre);
 			switch (Nuevo_Cliente)
 			{
 				case 1:
@@ -207,32 +211,27 @@
 				case 2:
 				Placa_Clientes.Vieja_MC.visible = true;
 				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				//Placa_Clientes.Tablones_TXT.text = Silla [0];
 				fnTexto_Pedido();
 				break;
 				case 3:
 				Placa_Clientes.Nena_MC.visible = true;
 				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				//Placa_Clientes.Tablones_TXT.text = Silla [0];
 				fnTexto_Pedido();
 				break;
 				case 4:
 				Placa_Clientes.Coqueta_MC.visible = true;
 				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				//Placa_Clientes.Tablones_TXT.text = Silla [0];
 				fnTexto_Pedido();
 				break;
 				case 5:
 				Placa_Clientes.Punk_MC.visible = true;
 				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				//Placa_Clientes.Tablones_TXT.text = Silla [0];
 				fnTexto_Pedido();
 				break;
 				case 6:
 				Placa_Clientes.Viejo_MC.visible = true;
 				Placa_Clientes.Cliente_TXT.text = nombre [Cliente_Texto];
-				//Placa_Clientes.Tablones_TXT.text = Silla [0];
-				fnTexto_Pedido();
+								fnTexto_Pedido();
 				break;
 			}
 		}
@@ -240,17 +239,17 @@
 		function fnTexto_Pedido():void
 		{
 			
-			Placa_Clientes.Precio_TXT.text = nombre[0];
-				Placa_Clientes.Alfajias_TXT.text = nombre[1];
-				Placa_Clientes.Tablones_TXT.text = nombre[2];
+			Placa_Clientes.Precio_TXT.text = "Precio  " + nombre[0];
+			Placa_Clientes.Alfajias_TXT.text = nombre[1];
+			Placa_Clientes.Tablones_TXT.text = nombre[2];
+			Placa_Clientes.Tiempo_para_Hacer_TXT.text = nombre[3]
 		}
 
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
-			trace(Silla);
-			var coso = Silla[0];
-			trace(coso);
+			Trabajos.push(nombre[4]);
+			trace (Trabajos);
 			Placa_Clientes.visible = false;
 		}
 
@@ -363,10 +362,10 @@
 
 		public function fnAceptarLaburo(event:MouseEvent):void
 		{
-			Trabajos[1] = Silla[0];
+			
 			_timer_trabajo.start();
 			Trabajo_en_Curso = true;// flag
-			var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Silla[3],true);
+			var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,nombre[3],true);
 		}
 
 
@@ -374,10 +373,10 @@
 
 		function timerListenerTrabajos(e:TimerEvent):void
 		{
-			var _hora_trabajo = _timer_trabajo.currentCount;
+			var _hora_trabajo = _timer_trabajo.currentCount;//variable local para comparar en el array
 
 
-			if (_hora_trabajo == Silla [3])
+			if (_hora_trabajo == nombre [3])
 			{
 				trace("laburo");// pa probar
 				_timer_trabajo.stop();
