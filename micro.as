@@ -70,6 +70,7 @@
 		var Caladora_precio = 1000;
 		var Taladro_banco_precio = 3000;
 		var Cafetera_precio = 1500;
+		
 
 		//Clientes
 		var Nuevo_Cliente = 0;
@@ -78,6 +79,8 @@
 		var Velocidad_var = 6;
 		var Cliente_var = "Vieja";
 		var Cliente_cara = "Placa_Clientes.Punk_MC";
+		var Cliente_on_Stage = false;
+
 
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
@@ -85,7 +88,10 @@
 		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio");
 		var Cama:Array = new Array(1200,2,2,12,"Cama","necesito me arregles la cama","Que cojones");
 		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda");
-		var Elementos:Array = new Array(Silla,Mesa,Cama);
+		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles la mesa","Que mierda");
+		var Reposera:Array = new Array(1300,2,3,8,"Reposera","necesito me arregles la mesa","Que mierda");
+		
+		var Elementos:Array = new Array(Silla,Mesa,Cama,Taburete,Reposera);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
 
 		// array de trabajos
@@ -127,6 +133,13 @@
 			Placa_Clientes.Coqueta_MC.visible = false;
 			Placa_Clientes.Punk_MC.visible = false;
 			Placa_Clientes.Viejo_MC.visible = false;
+			Punk.visible = false;
+			Mormon.visible = false;
+			Punk.visible = false;
+			Vieja.visible = false;
+			Viejo.visible = false;
+			Coqueta.visible = false;
+			Nena.visible = false;
 
 
 			// herramientas
@@ -151,9 +164,13 @@
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
-			Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			//Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			
+			
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
-			trace (Cliente_var);
+			trace(Cliente_var);
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
@@ -177,6 +194,9 @@
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = Comunidad_var;
 
+
+
+
 			// dia
 			Hora_Dia_var = Hora_Dia_var + 1;
 			if (Hora_Dia_var == Horas_para_Dia)
@@ -198,7 +218,14 @@
 					Semana.text = "Semana " + String(Semana_var);
 				}
 			}
+			//trace(Cliente_var.x);
+			if (Cliente_var.x <= 110)
+			{
+				Cliente_var.visible = false;
+				Cliente_var.gotoAndPlay("frente");
+				Cliente_on_Stage = false;
 
+			}
 		}
 
 
@@ -211,15 +238,15 @@
 		{
 			//if (Hora_var == Horas_para_Dia)
 			//{
-			if (Placa_Clientes.visible == false)
+			if (Cliente_on_Stage == false)
 			{
 				Nuevo_Cliente =((randomRange(0,5)));
 				if (Viejo_Cliente == Nuevo_Cliente)
 				{
 					fnCrear_Clientes();
 				}
-				//Placa_Clientes.visible = true;
-				
+
+				Cliente_on_Stage = true;
 				fnCliente_Actual();
 				trace("Cliente= " + Nuevo_Cliente);
 			}
@@ -230,7 +257,7 @@
 		function fnCliente_Actual():void
 		{
 			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
-			var nombre_numero =((randomRange(0,2)));// elige el producto del array
+			var nombre_numero =((randomRange(0,4)));// elige el producto del array
 			nombre = Elementos[nombre_numero];
 			//trace(nombre);
 			Viejo_Cliente = Nuevo_Cliente;
@@ -254,7 +281,7 @@
 					break;
 				case 2 :
 					//Placa_Clientes.Nena_MC.visible = true;
-					Cliente_cara =Placa_Clientes.Nena_MC;
+					Cliente_cara = Placa_Clientes.Nena_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 4;
 					Cliente_var = Nena;
@@ -263,7 +290,7 @@
 					break;
 				case 3 :
 					//Placa_Clientes.Coqueta_MC.visible = true;
-					Cliente_cara =Placa_Clientes.Coqueta_MC;
+					Cliente_cara = Placa_Clientes.Coqueta_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 7;
 					Cliente_var = Coqueta;
@@ -276,7 +303,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 6;
 					Cliente_var = Punk;
-					
+
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -295,15 +322,16 @@
 
 		function Mover_cliente():void
 		{
-			var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,94,600,Velocidad_var,true);
-			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,474,600,Velocidad_var,true);
+			Cliente_var.visible = true;
+			var Posicion_en_vertical =((randomRange(600,800)));
+			var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,200,600,Velocidad_var,true);
+			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,474,Posicion_en_vertical,Velocidad_var,true);
 			Cliente_var.globito.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Cliente);
 		}
 
 		function fnPlaca_Cliente(event:MouseEvent):void
 		{
 			Placa_Clientes.visible = true;
-			
 			Cliente_cara.visible = true;
 		}
 
@@ -320,7 +348,7 @@
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
-			Trabajos.push(nombre[4]);
+			Trabajos.push(nombre);
 			trace(Trabajos);
 			Placa_Clientes.visible = false;
 			Placa_Clientes.Mormon_MC.visible = false;
@@ -329,7 +357,11 @@
 			Placa_Clientes.Vieja_MC.visible = false;
 			Placa_Clientes.Viejo_MC.visible = false;
 			Placa_Clientes.Coqueta_MC.visible = false;
+			Cliente_var.gotoAndPlay("espalda");
+			var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,Cliente_var.x,100,Velocidad_var,true);
+			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
 			Tiempo_total_arreglo = nombre[3];
+
 		}
 
 		//Barraca
@@ -435,6 +467,12 @@
 		public function fnTrabajos(event:MouseEvent):void
 		{
 			Lista_Trabajos.visible = true;
+			var coso = Trabajos[0];
+			Lista_Trabajos.Array_Trabajos.text = Trabajos[0];
+			Lista_Trabajos.Array_Trabajos1.text = Trabajos[1];
+			Lista_Trabajos.Array_Trabajos2.text = Trabajos[2];
+			Lista_Trabajos.Array_Trabajos3.text = Trabajos[3];
+			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
 
 		public function fnAceptarLaburo(event:MouseEvent):void
