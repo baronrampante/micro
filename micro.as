@@ -1,14 +1,17 @@
 ﻿package 
 {
 
-	/* INDICE:
-	 IMPORT
-	 VARIABLES
-	 INICIO
-	 BARRACA
-	 ASERRADERO
-	 CLIENTES
+	/* 
+	INDICE:
+	IMPORT
+	VARIABLES
+	INICIO
+	BARRACA
+	ASERRADERO
+	CLIENTES
 	*/
+
+
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.events.Event;
@@ -35,11 +38,11 @@
 		public var cala_little_var = 0;
 		public var cala_big_var = 0;
 		public var Pintura_var = 0;
-		
+
 		//hijos
-		
+
 		var Empezar_Laburo_BT:Empezar_BT = new Empezar_BT();
-		
+
 
 		//variables botones stage
 
@@ -151,8 +154,9 @@
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
-
 		}
+
+
 		//Timer general Todos los eventos determinados por el tiempo
 
 
@@ -162,9 +166,14 @@
 			//trace(tiempost);
 			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
-			Lista_Trabajos.Avance_laburo.text = String(_timer_trabajo.currentCount);
+			Lista_Trabajos.Avance_laburo.text = String(Tiempo_total_arreglo);
 			trace("avance laburo" + _timer_trabajo.currentCount);
-			trace ("tiempo  " + Tiempo_total_arreglo);
+			trace("tiempo  " + Tiempo_total_arreglo);
+			//actualizar valores de la pantalla
+
+			Dinero.text = String(Dinero_var);
+			Comunidad.text = Comunidad_var;
+
 			// dia
 			Hora_Dia_var = Hora_Dia_var + 1;
 			if (Hora_Dia_var == Horas_para_Dia)
@@ -186,8 +195,10 @@
 					Semana.text = "Semana " + String(Semana_var);
 				}
 			}
-			
+
 		}
+
+
 
 
 		//Clientes
@@ -197,14 +208,17 @@
 		{
 			//if (Hora_var == Horas_para_Dia)
 			//{
-			Nuevo_Cliente =((randomRange(0,5)));
-			if (Viejo_Cliente == Nuevo_Cliente)
+			if (Placa_Clientes.visible == false)
 			{
-				fnCrear_Clientes();
+				Nuevo_Cliente =((randomRange(0,5)));
+				if (Viejo_Cliente == Nuevo_Cliente)
+				{
+					fnCrear_Clientes();
+				}
+				Placa_Clientes.visible = true;
+				fnCliente_Actual();
+				trace("Cliente= " + Nuevo_Cliente);
 			}
-			Placa_Clientes.visible = true;
-			fnCliente_Actual();
-			trace("Cliente= " + Nuevo_Cliente);
 			//}
 		}
 
@@ -215,7 +229,7 @@
 			var nombre_numero =((randomRange(0,2)));// elige el producto del array
 			nombre = Elementos[nombre_numero];
 			//trace(nombre);
-			Viejo_Cliente = Nuevo_Cliente
+			Viejo_Cliente = Nuevo_Cliente;
 			switch (Nuevo_Cliente)
 			{
 				case 0 :
@@ -346,8 +360,6 @@
 			Madera_MC.Tablones_Ingreso.text = "";
 			Madera_MC.Resultado_Madera_BT.addEventListener(MouseEvent.MOUSE_DOWN, Resultado_Madera);
 			Madera_MC.Resultado_Madera_BT2.addEventListener(MouseEvent.MOUSE_DOWN, Total_Madera);
-
-
 		}
 
 		public function Total_Madera(mc:MouseEvent):void
@@ -394,7 +406,7 @@
 				Trabajo_en_Curso = true;// flag
 				//Tiempo_total_arreglo = nombre [3];
 				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Tiempo_total_arreglo,true);
-			 }
+			}
 		}
 
 
@@ -410,7 +422,8 @@
 				_timer_trabajo.reset();
 				Trabajo_en_Curso = false;//flag
 				Dinero_var = Silla[0] + Dinero_var;
-				Dinero.text = String(Dinero_var);
+				Tiempo_total_arreglo = 0;
+				//Dinero.text = String(Dinero_var);
 			}
 		}
 
