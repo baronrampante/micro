@@ -27,6 +27,7 @@
 	import fl.transitions.easing.*;
 	import fl.transitions.TweenEvent;
 
+
 	public class micro extends MovieClip
 	{
 		public var _timer:Timer = new Timer(1000);// se ejecuta cada un segundo
@@ -70,7 +71,7 @@
 		var Caladora_precio = 1000;
 		var Taladro_banco_precio = 3000;
 		var Cafetera_precio = 1500;
-		
+
 
 		//Clientes
 		var Nuevo_Cliente = 0;
@@ -90,7 +91,7 @@
 		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda");
 		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles la mesa","Que mierda");
 		var Reposera:Array = new Array(1300,2,3,8,"Reposera","necesito me arregles la mesa","Que mierda");
-		
+
 		var Elementos:Array = new Array(Silla,Mesa,Cama,Taburete,Reposera);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
 
@@ -165,10 +166,10 @@
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
 			//Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
-			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
-			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
-			
-			
+			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+
+
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
 			trace(Cliente_var);
 			// timer;
@@ -362,6 +363,7 @@
 			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
 			Tiempo_total_arreglo = nombre[3];
 
+
 		}
 
 		//Barraca
@@ -464,6 +466,24 @@
 
 
 		// Trabajos
+
+
+		function fnBotones_Trabajos(event:MouseEvent):void
+		{
+			trace(event.target.name, event.currentTarget.name);
+			switch (event.target.name)
+			{
+
+					case "Array_Trabajos" :
+					trace("HHHHHHHHHHHHH");
+					break;
+					case "Array_Trabajos1" :
+					trace("QQQQQQQQQQQQQQQQQQ");
+					break;
+					
+			}
+		}
+
 		public function fnTrabajos(event:MouseEvent):void
 		{
 			Lista_Trabajos.visible = true;
