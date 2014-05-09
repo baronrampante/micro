@@ -77,6 +77,7 @@
 		var Producto_var = "Silla";
 		var Velocidad_var = 6;
 		var Cliente_var = "Vieja";
+		var Cliente_cara = "Placa_Clientes.Punk_MC";
 
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
@@ -236,7 +237,7 @@
 			switch (Nuevo_Cliente)
 			{
 				case 0 :
-					//Placa_Clientes.Mormon_MC.visible = true;
+					Cliente_cara = Placa_Clientes.Mormon_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 6;
 					Cliente_var = Mormon;
@@ -244,7 +245,7 @@
 					fnTexto_Pedido();
 					break;
 				case 1 :
-					//Placa_Clientes.Vieja_MC.visible = true;
+					Cliente_cara = Placa_Clientes.Vieja_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 10;
 					Cliente_var = Vieja;
@@ -253,6 +254,7 @@
 					break;
 				case 2 :
 					//Placa_Clientes.Nena_MC.visible = true;
+					Cliente_cara =Placa_Clientes.Nena_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 4;
 					Cliente_var = Nena;
@@ -261,6 +263,7 @@
 					break;
 				case 3 :
 					//Placa_Clientes.Coqueta_MC.visible = true;
+					Cliente_cara =Placa_Clientes.Coqueta_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 7;
 					Cliente_var = Coqueta;
@@ -269,14 +272,17 @@
 					break;
 				case 4 :
 					//Placa_Clientes.Punk_MC.visible = true;
+					Cliente_cara = Placa_Clientes.Punk_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 6;
 					Cliente_var = Punk;
+					
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 5 :
 					//Placa_Clientes.Viejo_MC.visible = true;
+					Cliente_cara = Placa_Clientes.Viejo_MC;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 10;
 					Cliente_var = Viejo;
@@ -297,8 +303,9 @@
 		function fnPlaca_Cliente(event:MouseEvent):void
 		{
 			Placa_Clientes.visible = true;
+			
+			Cliente_cara.visible = true;
 		}
-
 
 
 		function fnTexto_Pedido():void
