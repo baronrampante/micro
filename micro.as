@@ -75,6 +75,8 @@
 		var Nuevo_Cliente = 0;
 		var Viejo_Cliente = 100;
 		var Producto_var = "Silla";
+		var Velocidad_var = 6;
+		var Cliente_var = "Vieja";
 
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
@@ -150,7 +152,7 @@
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
 			Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
-
+			trace (Cliente_var);
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
@@ -215,7 +217,8 @@
 				{
 					fnCrear_Clientes();
 				}
-				Placa_Clientes.visible = true;
+				//Placa_Clientes.visible = true;
+				
 				fnCliente_Actual();
 				trace("Cliente= " + Nuevo_Cliente);
 			}
@@ -233,41 +236,73 @@
 			switch (Nuevo_Cliente)
 			{
 				case 0 :
-					Placa_Clientes.Mormon_MC.visible = true;
+					//Placa_Clientes.Mormon_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 6;
+					Cliente_var = Mormon;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 1 :
-					Placa_Clientes.Vieja_MC.visible = true;
+					//Placa_Clientes.Vieja_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 10;
+					Cliente_var = Vieja;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 2 :
-					Placa_Clientes.Nena_MC.visible = true;
+					//Placa_Clientes.Nena_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 4;
+					Cliente_var = Nena;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 3 :
-					Placa_Clientes.Coqueta_MC.visible = true;
+					//Placa_Clientes.Coqueta_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 7;
+					Cliente_var = Coqueta;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 4 :
-					Placa_Clientes.Punk_MC.visible = true;
+					//Placa_Clientes.Punk_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 6;
+					Cliente_var = Punk;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 				case 5 :
-					Placa_Clientes.Viejo_MC.visible = true;
+					//Placa_Clientes.Viejo_MC.visible = true;
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+					Velocidad_var = 10;
+					Cliente_var = Viejo;
+					Mover_cliente();
 					fnTexto_Pedido();
 					break;
 			}
 		}
 
+
+		function Mover_cliente():void
+		{
+			var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,94,600,Velocidad_var,true);
+			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,474,600,Velocidad_var,true);
+			Cliente_var.globito.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Cliente);
+		}
+
+		function fnPlaca_Cliente(event:MouseEvent):void
+		{
+			Placa_Clientes.visible = true;
+		}
+
+
+
 		function fnTexto_Pedido():void
 		{
-
 			Placa_Clientes.Precio_TXT.text = "Precio  " + nombre[0];
 			Placa_Clientes.Alfajias_TXT.text = nombre[1];
 			Placa_Clientes.Tablones_TXT.text = nombre[2];
