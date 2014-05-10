@@ -10,7 +10,7 @@
 	ASERRADERO
 	CLIENTES
 	*/
-
+	//fffff
 
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
@@ -68,6 +68,8 @@
 		var Alfajias_var_Numb:Number = 0;
 		var Tablones_var_Numb:Number = 0;
 		var Resultado_Maderas_var = 0;
+		var Alfajias_Stock = 0;
+		var Tablones_Stock = 0;
 
 		//precios
 
@@ -90,6 +92,8 @@
 		var Cliente_var = "Vieja";
 		var Cliente_cara = "Placa_Clientes.Punk_MC";
 		var Cliente_on_Stage = false;
+		var coso;//variable lista d eclientes
+		var Nombre_Cliente = "Mormon";
 
 
 
@@ -138,6 +142,12 @@
 			Dia.text = String(Dia_var);
 
 			//clientes
+			Lista_Trabajos.Mormon_MC.visible = false;
+			Lista_Trabajos.Vieja_MC.visible = false;
+			Lista_Trabajos.Nena_MC.visible = false;
+			Lista_Trabajos.Coqueta_MC.visible = false;
+			Lista_Trabajos.Punk_MC.visible = false;
+			Lista_Trabajos.Viejo_MC.visible = false;
 			Placa_Clientes.Mormon_MC.visible = false;
 			Placa_Clientes.Vieja_MC.visible = false;
 			Placa_Clientes.Nena_MC.visible = false;
@@ -185,7 +195,7 @@
 			Lista_Trabajos.Array_Trabajos3.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos4.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);*/
-			
+
 			Barrio.Comunidad_Cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnComunidad);
 			Comunidad_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnBarrio_Comunidad);
 
@@ -196,20 +206,24 @@
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 		}
-		
-		function fnPlaca_Financiera(event:MouseEvent):void {
+
+		function fnPlaca_Financiera(event:MouseEvent):void
+		{
 			Placa_financiera.visible = true;
 		}
-		
-		function fnPlaca_Financiera_Cerrar(event:MouseEvent):void {
+
+		function fnPlaca_Financiera_Cerrar(event:MouseEvent):void
+		{
 			Placa_financiera.visible = false;
 		}
-		
-		function fnComunidad(event:MouseEvent):void {
+
+		function fnComunidad(event:MouseEvent):void
+		{
 			Barrio.visible = false;
 		}
-		
-		function fnBarrio_Comunidad(event:MouseEvent):void {
+
+		function fnBarrio_Comunidad(event:MouseEvent):void
+		{
 			Barrio.visible = true;
 		}
 
@@ -322,8 +336,9 @@
 		{
 			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
 			var nombre_numero =((randomRange(0,4)));// elige el producto del array
-			if (Producto_Viejo == nombre_numero){
-				fnCliente_Actual()
+			if (Producto_Viejo == nombre_numero)
+			{
+				fnCliente_Actual();
 			}
 			nombre = Elementos[nombre_numero];
 			Producto_Viejo = nombre_numero;
@@ -336,6 +351,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 6;
 					Cliente_var = Mormon;
+					Nombre_Cliente = "Martín";
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -344,6 +360,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 10;
 					Cliente_var = Vieja;
+					Nombre_Cliente = "Olga";
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -353,6 +370,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 4;
 					Cliente_var = Nena;
+					Nombre_Cliente = "Lucía";
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -362,6 +380,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 7;
 					Cliente_var = Coqueta;
+					Nombre_Cliente = "Andrea";
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -371,6 +390,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 6;
 					Cliente_var = Punk;
+					Nombre_Cliente = "Julio";
 
 					Mover_cliente();
 					fnTexto_Pedido();
@@ -381,6 +401,7 @@
 					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 					Velocidad_var = 10;
 					Cliente_var = Viejo;
+					Nombre_Cliente = "Gustavo";
 					Mover_cliente();
 					fnTexto_Pedido();
 					break;
@@ -422,6 +443,7 @@
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
+			nombre[8] = Nombre_Cliente;
 			Trabajos.push(nombre);
 			trace(Trabajos);
 			Placa_Clientes.visible = false;
@@ -519,6 +541,7 @@
 			Tablones_var_Numb = Number(Madera_MC.Tablones_Ingreso.text);
 			var Alfajias_var_compra = Alfajias_var_Numb * Alfajias_precio;
 			var Tablones_var_compra = Tablones_var_Numb * Tablones_precio;
+
 			//Resultado_Maderas_var = Alfajias_var_Numb + Tablones_var_Numb;
 			//trace(Alfajias_var_compra + Tablones_var_compra);
 			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
@@ -536,6 +559,8 @@
 			//trace(Alfajias_var_compra + Tablones_var_compra);
 			Dinero_var = Dinero_var - Alfajias_var_compra - Tablones_var_compra;
 			Dinero.text = String(Dinero_var);
+			Alfajias_Stock = Alfajias_Stock + Alfajias_var_Numb;
+			Tablones_Stock = Tablones_Stock + Tablones_var_Numb;
 			Madera_MC.visible = false;
 		}
 
@@ -550,42 +575,79 @@
 			{
 
 				case "Array_Trabajos" :
-					trace("HHHHHHHHHHHHH");
-					var coso = Trabajos[0];
+					coso = Trabajos[0];
 					Tiempo_total_arreglo = coso[3];
-					fnEmpezarLaburo();
+					Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
+					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos1" :
-					trace("QQQQQQQQQQQQQQQQQQ");
 					coso = Trabajos[1];
 					Tiempo_total_arreglo = coso[3];
-					fnEmpezarLaburo();
+					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos2" :
-					trace("HHHHHHHHHHHHH");
 					coso = Trabajos[2];
 					Tiempo_total_arreglo = coso[3];
-					fnEmpezarLaburo();
+					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos3" :
-					trace("QQQQQQQQQQQQQQQQQQ");
 					coso = Trabajos[3];
 					Tiempo_total_arreglo = coso[3];
-					fnEmpezarLaburo();
+					fnLista_Trabajos();
 					break;
-				case "Array_Trabajos3" :
-					trace("QQQQQQQQQQQQQQQQQQ");
+				case "Array_Trabajos4" :
 					coso = Trabajos[4];
 					Tiempo_total_arreglo = coso[3];
-					fnEmpezarLaburo();
+					fnLista_Trabajos();
 					break;
 
 			}
 		}
 
+		function fnLista_Trabajos():void
+		{
+			Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
+			Lista_Trabajos.Datos_Precio.text = String(coso[0]);
+			Lista_Trabajos.Datos_Trabajo.text = String(coso[4]);
+			Lista_Trabajos.Datos_Materiales.text = "Tablones " + String(coso[1]) + "  Alfajías " + String(coso[2]);
+			Lista_Trabajos.Datos_Cliente.text = String(coso[8]);
+			Lista_Trabajos.Mormon_MC.visible = false;
+			Lista_Trabajos.Vieja_MC.visible = false;
+			Lista_Trabajos.Nena_MC.visible = false;
+			Lista_Trabajos.Coqueta_MC.visible = false;
+			Lista_Trabajos.Punk_MC.visible = false;
+			Lista_Trabajos.Viejo_MC.visible = false;
+			switch (coso[8])
+			{
+				case "Martín" :
+					Lista_Trabajos.Mormon_MC.visible = true;
+					break;
+				case "Olga" :
+					Lista_Trabajos.Vieja_MC.visible = true;
+					break;
+				case "Lucía" :
+					Lista_Trabajos.Nena_MC.visible = true;
+					break;
+				case "Andrea" :
+					Lista_Trabajos.Coqueta_MC.visible = true;
+					break;
+				case "Julio" :
+					Lista_Trabajos.Punk_MC.visible = true;
+					break;
+				case "Gustavo" :
+					Lista_Trabajos.Viejo_MC.visible = true;
+					break;
+			}
+
+		}
+
+		//Genera pantalla de lista de trabajos y carga los laburos en los diferentes casilleros
+
 		public function fnTrabajos(event:MouseEvent):void
 		{
 			Lista_Trabajos.visible = true;
+			Lista_Trabajos.Datos_Alfajias.text = String(Alfajias_Stock);
+			Lista_Trabajos.Datos_Tablones.text = String(Tablones_Stock);
 
 			Lista_Trabajos.Array_Trabajos.text = Trabajos[0];
 			Lista_Trabajos.Array_Trabajos1.text = Trabajos[1];
@@ -593,6 +655,8 @@
 			Lista_Trabajos.Array_Trabajos3.text = Trabajos[3];
 			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
+
+		// Se pone a hacer el trabajo
 
 		public function fnEmpezarLaburo():void
 		{
