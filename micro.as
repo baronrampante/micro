@@ -57,6 +57,10 @@
 		public var Horas_para_Dia = 12;// variable que determina el día
 		public var Dias_para_Semana = 5;// variable que determina duracion semana
 		public var Dia_Semana = 0;// variable que cuenta los dias para llegar a a la semana
+		public var Cuota_Banco = 3000;
+		public var Gastos_Fijos = 1500;
+		var Sueldos = 0;
+		var Gastos_Personales = 500;
 
 
 		//variables compras
@@ -72,6 +76,10 @@
 		var Caladora_precio = 1000;
 		var Taladro_banco_precio = 3000;
 		var Cafetera_precio = 1500;
+		var Mesa_Combinada_precio = 3000;
+		var Pinturas_precio = 1000;
+		var Caladora_Pie_precio = 4000;
+		var Taladro_Pie_precio = 3000;
 
 
 		//Clientes
@@ -157,6 +165,8 @@
 			Lista_Trabajos.visible = false;
 			Barra.visible = false;
 			Madera_MC.visible = false;
+			Placa_financiera.visible = false;
+			Barrio.visible = false;
 
 			//clientes creación
 			//fnCrear_Clientes();
@@ -166,13 +176,17 @@
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
-			//Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
+			Financiera_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera);
+			Placa_financiera.btn_cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera_Cerrar);
 			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos2.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos3.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos4.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			
+			Barrio.Comunidad_Cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnComunidad);
+			Comunidad_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnBarrio_Comunidad);
 
 
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
@@ -180,6 +194,22 @@
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
+		}
+		
+		function fnPlaca_Financiera(event:MouseEvent):void {
+			Placa_financiera.visible = true;
+		}
+		
+		function fnPlaca_Financiera_Cerrar(event:MouseEvent):void {
+			Placa_financiera.visible = false;
+		}
+		
+		function fnComunidad(event:MouseEvent):void {
+			Barrio.visible = false;
+		}
+		
+		function fnBarrio_Comunidad(event:MouseEvent):void {
+			Barrio.visible = true;
 		}
 
 
@@ -199,9 +229,21 @@
 
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = Comunidad_var;
-			
-			
-			
+			Placa_financiera.txt_total_capital.text = String(Dinero_var);
+			Placa_financiera.txt_mes.text = String(Semana_var);
+			Placa_financiera.txt_cuota.text = String(Cuota_Banco);
+			Placa_financiera.txt_gastos_fijos.text = String(Gastos_Fijos);
+			Placa_financiera.txt_gastos_personales.text = String(Gastos_Personales);
+			Placa_financiera.txt_sueldos.text = String(Sueldos);
+			Placa_financiera.txt_total_gastos.text = String(Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco);
+			var Gastos = Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco;
+			Placa_financiera.txt_saldo.text = String (Dinero_var - Gastos);
+
+
+
+
+
+
 
 
 
@@ -235,16 +277,17 @@
 				Cliente_var.globito.gotoAndPlay("normal");
 				Cliente_on_Stage = false;
 			}
-			if (_timer_espera_cliente.currentCount == 10){
+			if (_timer_espera_cliente.currentCount == 10)
+			{
 				Cliente_var.gotoAndPlay("espalda");
 				Cliente_var.globito.gotoAndPlay("mal");
 				_timer_espera_cliente.reset();
 				_timer_espera_cliente.stop();
 				var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,Cliente_var.x,100,Velocidad_var,true);
-			    var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
+				var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
 			}
-			
-			
+
+
 		}
 
 
@@ -351,13 +394,14 @@
 
 		function fnPlaca_Cliente(event:MouseEvent):void
 		{
-			if (_timer_espera_cliente.currentCount != 0){// si se está yendo no se habilita la placa
-			Placa_Clientes.visible = true;
-			Cliente_cara.visible = true;
-			_timer_espera_cliente.stop();
-			_timer_espera_cliente.reset();
+			if (_timer_espera_cliente.currentCount != 0)
+			{// si se está yendo no se habilita la placa
+				Placa_Clientes.visible = true;
+				Cliente_cara.visible = true;
+				_timer_espera_cliente.stop();
+				_timer_espera_cliente.reset();
 			}
-			
+
 		}
 
 
@@ -407,7 +451,6 @@
 		{
 			cala_little.visible = true;
 			Dinero_var = Dinero_var - Caladora_precio;
-			Dinero.text = String(Dinero_var);
 			Barra.visible = false;
 			cala_little_var = 1;
 		}
@@ -415,6 +458,7 @@
 		public function Comprar_Sierra_Pie(event:MouseEvent):void
 		{
 			Caladora_de_Pie.visible = true;
+			Dinero_var = Dinero_var - Caladora_Pie_precio;
 			Barra.visible = false;
 			cala_little_var = 1;
 		}
@@ -422,6 +466,7 @@
 		public function Comprar_Pintura(event:MouseEvent):void
 		{
 			Lata_Pintura_MC.visible = true;
+			Dinero_var = Dinero_var - Pinturas_precio;
 			Barra.visible = false;
 			Pintura_var = 1;
 		}
@@ -430,7 +475,6 @@
 		{
 			Cafetera_Chica.visible = true;
 			Dinero_var = Dinero_var - Cafetera_precio;
-			Dinero.text = String(Dinero_var);
 			Barra.visible = false;
 			cala_big_var = 1;
 		}
@@ -438,6 +482,7 @@
 		public function Comprar_Mesa_Combinada(event:MouseEvent):void
 		{
 			Combinada_MC.visible = true;
+			Dinero_var = Dinero_var - Mesa_Combinada_precio;
 			Barra.visible = false;
 			cala_big_var = 1;
 		}
@@ -445,6 +490,7 @@
 		public function Comprar_Taladro_Pie(event:MouseEvent):void
 		{
 			cala_big.visible = true;
+			Dinero_var = Dinero_var - Taladro_Pie_precio;
 			Barra.visible = false;
 			cala_big_var = 1;
 		}
