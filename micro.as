@@ -32,6 +32,7 @@
 	{
 		public var _timer:Timer = new Timer(1000);// se ejecuta cada un segundo
 		public var _timer_trabajo:Timer = new Timer(Tiempo_construccion);// definimos cuanto es el tiempo de mareo
+		public var _timer_espera_cliente:Timer = new Timer(1000);// se ejecuta cada un segundo
 		private var _tiempo_jugado:uint = 0;
 		private var _tiempo_para_jugar:uint = 50;// definir el tiempo total aca
 
@@ -49,8 +50,8 @@
 
 		public var Dinero_var = 12000;
 		public var Comunidad_var = 600;
-		public var Dia_var = 0;
-		public var Semana_var = 0;
+		public var Dia_var = 1;
+		public var Semana_var = 1;
 		public var Hora_var = 1;
 		public var Hora_Dia_var = 0;// se incrementa cada hora
 		public var Horas_para_Dia = 12;// variable que determina el día
@@ -124,8 +125,8 @@
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = String(Comunidad_var);
 			Horas.text = String(_timer.currentCount) + "  horas";
-			Semana.text = "Semana " + String(Semana_var);
-			Dia.text = "Dia " + String(Dia_var);
+			Semana.text = String(Semana_var);
+			Dia.text = String(Dia_var);
 
 			//clientes
 			Placa_Clientes.Mormon_MC.visible = false;
@@ -168,6 +169,10 @@
 			//Lista_Trabajos.Aceptar1.addEventListener(MouseEvent.MOUSE_DOWN, fnAceptarLaburo);
 			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos2.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos3.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos4.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 
 
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
@@ -194,6 +199,9 @@
 
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = Comunidad_var;
+			
+			
+			
 
 
 
@@ -208,7 +216,7 @@
 				fnCrear_Clientes();
 				Dia_var = Dia_var + 1;
 				Hora_Dia_var = 0;
-				Dia.text = "Dia " + String(Dia_var);
+				Dia.text = String(Dia_var);
 
 				// semana
 				Dia_Semana = Dia_Semana + 1;
@@ -216,7 +224,7 @@
 				{
 					Semana_var = Semana_var + 1;
 					Dia_Semana = 0;
-					Semana.text = "Semana " + String(Semana_var);
+					Semana.text = String(Semana_var);
 				}
 			}
 			//trace(Cliente_var.x);
@@ -224,9 +232,19 @@
 			{
 				Cliente_var.visible = false;
 				Cliente_var.gotoAndPlay("frente");
+				Cliente_var.globito.gotoAndPlay("normal");
 				Cliente_on_Stage = false;
-
 			}
+			if (_timer_espera_cliente.currentCount == 10){
+				Cliente_var.gotoAndPlay("espalda");
+				Cliente_var.globito.gotoAndPlay("mal");
+				_timer_espera_cliente.reset();
+				_timer_espera_cliente.stop();
+				var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,Cliente_var.x,100,Velocidad_var,true);
+			    var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
+			}
+			
+			
 		}
 
 
@@ -244,8 +262,9 @@
 				Nuevo_Cliente =((randomRange(0,5)));
 				if (Viejo_Cliente == Nuevo_Cliente)
 				{
-					fnCrear_Clientes();
+					fnCrear_Clientes();// si se repite reinicia la función
 				}
+				_timer_espera_cliente.start();
 
 				Cliente_on_Stage = true;
 				fnCliente_Actual();
@@ -332,8 +351,13 @@
 
 		function fnPlaca_Cliente(event:MouseEvent):void
 		{
+			if (_timer_espera_cliente.currentCount != 0){// si se está yendo no se habilita la placa
 			Placa_Clientes.visible = true;
 			Cliente_cara.visible = true;
+			_timer_espera_cliente.stop();
+			_timer_espera_cliente.reset();
+			}
+			
 		}
 
 
@@ -361,7 +385,7 @@
 			Cliente_var.gotoAndPlay("espalda");
 			var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,Cliente_var.x,100,Velocidad_var,true);
 			var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
-			Tiempo_total_arreglo = nombre[3];
+			//Tiempo_total_arreglo = nombre[3];
 
 
 		}
@@ -474,20 +498,44 @@
 			switch (event.target.name)
 			{
 
-					case "Array_Trabajos" :
+				case "Array_Trabajos" :
 					trace("HHHHHHHHHHHHH");
+					var coso = Trabajos[0];
+					Tiempo_total_arreglo = coso[3];
+					fnEmpezarLaburo();
 					break;
-					case "Array_Trabajos1" :
+				case "Array_Trabajos1" :
 					trace("QQQQQQQQQQQQQQQQQQ");
+					coso = Trabajos[1];
+					Tiempo_total_arreglo = coso[3];
+					fnEmpezarLaburo();
 					break;
-					
+				case "Array_Trabajos2" :
+					trace("HHHHHHHHHHHHH");
+					coso = Trabajos[2];
+					Tiempo_total_arreglo = coso[3];
+					fnEmpezarLaburo();
+					break;
+				case "Array_Trabajos3" :
+					trace("QQQQQQQQQQQQQQQQQQ");
+					coso = Trabajos[3];
+					Tiempo_total_arreglo = coso[3];
+					fnEmpezarLaburo();
+					break;
+				case "Array_Trabajos3" :
+					trace("QQQQQQQQQQQQQQQQQQ");
+					coso = Trabajos[4];
+					Tiempo_total_arreglo = coso[3];
+					fnEmpezarLaburo();
+					break;
+
 			}
 		}
 
 		public function fnTrabajos(event:MouseEvent):void
 		{
 			Lista_Trabajos.visible = true;
-			var coso = Trabajos[0];
+
 			Lista_Trabajos.Array_Trabajos.text = Trabajos[0];
 			Lista_Trabajos.Array_Trabajos1.text = Trabajos[1];
 			Lista_Trabajos.Array_Trabajos2.text = Trabajos[2];
@@ -495,14 +543,14 @@
 			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
 
-		public function fnAceptarLaburo(event:MouseEvent):void
+		public function fnEmpezarLaburo():void
 		{
 			if (Trabajo_en_Curso == false)
 			{
 				_timer_trabajo.start();
-				Lista_Trabajos.addChild(Empezar_Laburo_BT);
-				Empezar_Laburo_BT.x = -300;
-				Empezar_Laburo_BT.y = 0;
+				//Lista_Trabajos.addChild(Empezar_Laburo_BT);
+				//Empezar_Laburo_BT.x = -300;
+				//Empezar_Laburo_BT.y = 0;
 				Trabajo_en_Curso = true;// flag
 				//Tiempo_total_arreglo = nombre [3];
 				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Tiempo_total_arreglo,true);
