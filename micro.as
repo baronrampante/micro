@@ -94,6 +94,8 @@
 		var Cliente_on_Stage = false;
 		var coso;//variable lista d eclientes
 		var Nombre_Cliente = "Mormon";
+		var cara = "Mormon";
+		var Clientes:Array = [];
 
 
 
@@ -447,8 +449,7 @@
 		{
 			//nombre[7] = Nombres_Clientes[Nombre_Cliente];
 			Trabajos[Trabajos_Lista_Clientes] = nombre;
-			Trabajos_Lista_Clientes = Trabajos_Lista_Clientes + 1;
-			Trabajos[Trabajos_Lista_Clientes] = Nombres_Clientes[Nombre_Cliente];
+			Clientes[Trabajos_Lista_Clientes] = Nombres_Clientes[Nombre_Cliente];
 			Trabajos_Lista_Clientes = Trabajos_Lista_Clientes + 1;
 
 			trace(Trabajos[0]);
@@ -591,27 +592,32 @@
 			{
 				case "Array_Trabajos" :
 					coso = Trabajos[0];
+					cara = Clientes[0];
 					Tiempo_total_arreglo = coso[3];
 					//Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
 					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos1" :
 					coso = Trabajos[1];
+					cara = Clientes[1];
 					Tiempo_total_arreglo = coso[3];
 					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos2" :
 					coso = Trabajos[2];
+					cara = Clientes[2];
 					Tiempo_total_arreglo = coso[3];
 					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos3" :
 					coso = Trabajos[3];
+					cara = Clientes[3];
 					Tiempo_total_arreglo = coso[3];
 					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos4" :
 					coso = Trabajos[4];
+					cara = Clientes[4];
 					Tiempo_total_arreglo = coso[3];
 					fnLista_Trabajos();
 					break;
@@ -626,7 +632,7 @@
 			Lista_Trabajos.Datos_Precio.text = String(coso[0]);
 			Lista_Trabajos.Datos_Trabajo.text = String(coso[4]);
 			Lista_Trabajos.Datos_Materiales.text = "Tablones " + String(coso[1]) + "  Alfajías " + String(coso[2]);
-			Lista_Trabajos.Datos_Cliente.text = String(coso[8]);
+			Lista_Trabajos.Datos_Cliente.text = String(cara);
 			Lista_Trabajos.Mormon_MC.visible = false;
 			Lista_Trabajos.Vieja_MC.visible = false;
 			Lista_Trabajos.Nena_MC.visible = false;
@@ -639,7 +645,7 @@
 			Lista_Trabajos.Banquito_Roto.visible = false;
 			Lista_Trabajos.Mesita_Roto.visible = false;
 			Lista_Trabajos.Luz_Roto.visible = false;
-			switch (coso[8])
+			switch (cara)
 			{
 				case "Martín" :
 					Lista_Trabajos.Mormon_MC.visible = true;
@@ -692,7 +698,7 @@
 			Lista_Trabajos.Array_Trabajos.text = Trabajos[0];
 			Lista_Trabajos.Array_Trabajos1.text = Trabajos[1];
 			Lista_Trabajos.Array_Trabajos2.text = Trabajos[2];
-			Lista_Trabajos.Array_Trabajos3.text = Trabajos[3];
+			Lista_Trabajos.Array_Trabajos3.text = Trabajos[2];
 			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
 
