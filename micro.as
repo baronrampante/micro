@@ -98,8 +98,8 @@
 		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio");
 		var Cama:Array = new Array(1200,2,2,12,"Cama","necesito me arregles la cama","Que cojones");
 		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda");
-		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles la mesa","Que mierda");
-		var Reposera:Array = new Array(1300,2,3,8,"Reposera","necesito me arregles la mesa","Que mierda");
+		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles el Taburete","Upiis");
+		var Reposera:Array = new Array(1300,2,3,8,"Reposera","necesito me arregles la Reposera","Que mierda");
 
 		var Elementos:Array = new Array(Silla,Mesa,Cama,Taburete,Reposera);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
@@ -326,6 +326,7 @@
 				fnCliente_Actual()
 			}
 			nombre = Elementos[nombre_numero];
+			Producto_Viejo = nombre_numero;
 			//trace(nombre);
 			Viejo_Cliente = Nuevo_Cliente;
 			switch (Nuevo_Cliente)
