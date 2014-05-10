@@ -54,7 +54,7 @@
 		public var Semana_var = 1;
 		public var Hora_var = 1;
 		public var Hora_Dia_var = 0;// se incrementa cada hora
-		public var Horas_para_Dia = 12;// variable que determina el día
+		public var Horas_para_Dia = 5;// variable que determina el día
 		public var Dias_para_Semana = 5;// variable que determina duracion semana
 		public var Dia_Semana = 0;// variable que cuenta los dias para llegar a a la semana
 		public var Cuota_Banco = 3000;
@@ -99,20 +99,23 @@
 
 		// arrays clientes pedidos orden_= Precio, Alfajías, Tablones, Tiempo en horas, Cliente [4]
 		var Eleccion_Trabajos:Array = new Array();
-		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio");
-		var Cama:Array = new Array(1200,2,2,12,"Cama","necesito me arregles la cama","Que cojones");
-		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda");
-		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles el Taburete","Upiis");
-		var Reposera:Array = new Array(1300,2,3,8,"Reposera","necesito me arregles la Reposera","Que mierda");
+		var Silla:Array = new Array(500,1,1,4,"Silla","necesito me arregles la silla","Que pasa tio","");
+		var Cama:Array = new Array(1200,2,2,12,"Mesita","necesito me arregles la cama","Que cojones","");
+		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda","");
+		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles el Taburete","Upiis","");
+		var Reposera:Array = new Array(1300,2,3,8,"Mesa de Luz","necesito me arregles la Reposera","Que mierda","");
+		var Nombres_Clientes:Array = new Array("Martín","Lucía","Julio","Olga","Andrea","Gustavo");
 
 		var Elementos:Array = new Array(Silla,Mesa,Cama,Taburete,Reposera);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
 
 		// array de trabajos
-		var Trabajos:Array = new Array ();
+		//var Trabajos:Array = new Array(20);
+		var Trabajos:Array = [];
 		var Tiempo_construccion = 1000;
 		var Tiempo_total_arreglo = 0;
-		var Producto_Viejo = 0;
+		var Producto_Viejo = 100;
+		var Trabajos_Lista_Clientes = 0;
 
 		// flags
 		var Trabajo_en_Curso = false;
@@ -142,6 +145,12 @@
 			Dia.text = String(Dia_var);
 
 			//clientes
+			Lista_Trabajos.Taburete_Roto.visible = false;
+			Lista_Trabajos.Silla_Roto.visible = false;
+			Lista_Trabajos.Mesa_Roto.visible = false;
+			Lista_Trabajos.Banquito_Roto.visible = false;
+			Lista_Trabajos.Mesita_Roto.visible = false;
+			Lista_Trabajos.Luz_Roto.visible = false;
 			Lista_Trabajos.Mormon_MC.visible = false;
 			Lista_Trabajos.Vieja_MC.visible = false;
 			Lista_Trabajos.Nena_MC.visible = false;
@@ -201,7 +210,7 @@
 
 
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
-			trace(Cliente_var);
+			trace(nombre);
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
@@ -238,8 +247,8 @@
 			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
 			Lista_Trabajos.Avance_laburo.text = String(Tiempo_total_arreglo);
-			trace("avance laburo" + _timer_trabajo.currentCount);
-			trace("tiempo  " + Tiempo_total_arreglo);
+			//trace("avance laburo" + _timer_trabajo.currentCount);
+			//trace("tiempo  " + Tiempo_total_arreglo);
 			//actualizar valores de la pantalla
 
 			Dinero.text = String(Dinero_var);
@@ -253,12 +262,6 @@
 			Placa_financiera.txt_total_gastos.text = String(Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco);
 			var Gastos = Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco;
 			Placa_financiera.txt_saldo.text = String (Dinero_var - Gastos);
-
-
-
-
-
-
 
 
 
@@ -301,10 +304,7 @@
 				var myPunkx:Tween = new Tween(Cliente_var,"x",None.easeInOut,Cliente_var.x,100,Velocidad_var,true);
 				var myPunky:Tween = new Tween(Cliente_var,"y",None.easeInOut,Cliente_var.y,474,Velocidad_var,true);
 			}
-
-
 		}
-
 
 
 
@@ -326,7 +326,7 @@
 
 				Cliente_on_Stage = true;
 				fnCliente_Actual();
-				trace("Cliente= " + Nuevo_Cliente);
+				//trace("Cliente= " + Nuevo_Cliente);
 			}
 			//}
 		}
@@ -336,75 +336,77 @@
 		{
 			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
 			var nombre_numero =((randomRange(0,4)));// elige el producto del array
-			if (Producto_Viejo == nombre_numero)
-			{
-				fnCliente_Actual();
-			}
-			nombre = Elementos[nombre_numero];
-			Producto_Viejo = nombre_numero;
-			//trace(nombre);
-			Viejo_Cliente = Nuevo_Cliente;
-			switch (Nuevo_Cliente)
-			{
-				case 0 :
-					Cliente_cara = Placa_Clientes.Mormon_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 6;
-					Cliente_var = Mormon;
-					Nombre_Cliente = "Martín";
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
-				case 1 :
-					Cliente_cara = Placa_Clientes.Vieja_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 10;
-					Cliente_var = Vieja;
-					Nombre_Cliente = "Olga";
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
-				case 2 :
-					//Placa_Clientes.Nena_MC.visible = true;
-					Cliente_cara = Placa_Clientes.Nena_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 4;
-					Cliente_var = Nena;
-					Nombre_Cliente = "Lucía";
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
-				case 3 :
-					//Placa_Clientes.Coqueta_MC.visible = true;
-					Cliente_cara = Placa_Clientes.Coqueta_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 7;
-					Cliente_var = Coqueta;
-					Nombre_Cliente = "Andrea";
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
-				case 4 :
-					//Placa_Clientes.Punk_MC.visible = true;
-					Cliente_cara = Placa_Clientes.Punk_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 6;
-					Cliente_var = Punk;
-					Nombre_Cliente = "Julio";
+			trace("numero viejo--" + Producto_Viejo);
+			trace("numero nuevo   " + nombre_numero);
 
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
-				case 5 :
-					//Placa_Clientes.Viejo_MC.visible = true;
-					Cliente_cara = Placa_Clientes.Viejo_MC;
-					Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
-					Velocidad_var = 10;
-					Cliente_var = Viejo;
-					Nombre_Cliente = "Gustavo";
-					Mover_cliente();
-					fnTexto_Pedido();
-					break;
+			if (Producto_Viejo != nombre_numero)
+			{
+				nombre = Elementos[nombre_numero];
+				Producto_Viejo = nombre_numero;
+				trace(Producto_Viejo);
+				Viejo_Cliente = Nuevo_Cliente;
+				switch (Nuevo_Cliente)
+				{
+					case 0 :
+						Cliente_cara = Placa_Clientes.Mormon_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 6;
+						Cliente_var = Mormon;
+						Nombre_Cliente = 1;
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+					case 1 :
+						Cliente_cara = Placa_Clientes.Vieja_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 10;
+						Cliente_var = Vieja;
+						Nombre_Cliente = 2;
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+					case 2 :
+						//Placa_Clientes.Nena_MC.visible = true;
+						Cliente_cara = Placa_Clientes.Nena_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 4;
+						Cliente_var = Nena;
+						Nombre_Cliente = 3;
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+					case 3 :
+						//Placa_Clientes.Coqueta_MC.visible = true;
+						Cliente_cara = Placa_Clientes.Coqueta_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 7;
+						Cliente_var = Coqueta;
+						Nombre_Cliente = 4;
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+					case 4 :
+						//Placa_Clientes.Punk_MC.visible = true;
+						Cliente_cara = Placa_Clientes.Punk_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 6;
+						Cliente_var = Punk;
+						Nombre_Cliente = 5;
+
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+					case 5 :
+						//Placa_Clientes.Viejo_MC.visible = true;
+						Cliente_cara = Placa_Clientes.Viejo_MC;
+						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
+						Velocidad_var = 10;
+						Cliente_var = Viejo;
+						Nombre_Cliente = 6;
+						Mover_cliente();
+						fnTexto_Pedido();
+						break;
+				}
 			}
 		}
 
@@ -443,9 +445,23 @@
 
 		public function Clientes_Pedido(event:MouseEvent):void
 		{
-			nombre[8] = Nombre_Cliente;
-			Trabajos.push(nombre);
-			trace(Trabajos);
+			//nombre[7] = Nombres_Clientes[Nombre_Cliente];
+			Trabajos[Trabajos_Lista_Clientes] = nombre;
+			Trabajos_Lista_Clientes = Trabajos_Lista_Clientes + 1;
+			Trabajos[Trabajos_Lista_Clientes] = Nombres_Clientes[Nombre_Cliente];
+			Trabajos_Lista_Clientes = Trabajos_Lista_Clientes + 1;
+
+			trace(Trabajos[0]);
+			trace(Trabajos[1]);
+			trace(Trabajos[2]);
+			trace(Trabajos[3]);
+			trace(Trabajos[4]);
+			trace(Trabajos[5]);
+			trace(Trabajos[6]);
+			trace(Trabajos[7]);
+			trace(Trabajos[8]);
+			trace(Trabajos[9]);
+			trace("numero de lista   " + Trabajos_Lista_Clientes);
 			Placa_Clientes.visible = false;
 			Placa_Clientes.Mormon_MC.visible = false;
 			Placa_Clientes.Nena_MC.visible = false;
@@ -570,14 +586,13 @@
 
 		function fnBotones_Trabajos(event:MouseEvent):void
 		{
-			trace(event.target.name, event.currentTarget.name);
+			//trace(event.target.name, event.currentTarget.name);
 			switch (event.target.name)
 			{
-
 				case "Array_Trabajos" :
 					coso = Trabajos[0];
 					Tiempo_total_arreglo = coso[3];
-					Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
+					//Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
 					fnLista_Trabajos();
 					break;
 				case "Array_Trabajos1" :
@@ -604,6 +619,7 @@
 			}
 		}
 
+
 		function fnLista_Trabajos():void
 		{
 			Lista_Trabajos.Datos_Tiempo.text = String(Tiempo_total_arreglo);
@@ -617,6 +633,12 @@
 			Lista_Trabajos.Coqueta_MC.visible = false;
 			Lista_Trabajos.Punk_MC.visible = false;
 			Lista_Trabajos.Viejo_MC.visible = false;
+			Lista_Trabajos.Taburete_Roto.visible = false;
+			Lista_Trabajos.Silla_Roto.visible = false;
+			Lista_Trabajos.Mesa_Roto.visible = false;
+			Lista_Trabajos.Banquito_Roto.visible = false;
+			Lista_Trabajos.Mesita_Roto.visible = false;
+			Lista_Trabajos.Luz_Roto.visible = false;
 			switch (coso[8])
 			{
 				case "Martín" :
@@ -638,6 +660,24 @@
 					Lista_Trabajos.Viejo_MC.visible = true;
 					break;
 			}
+			switch (coso[4])
+			{
+				case "Silla" :
+					Lista_Trabajos.Silla_Roto.visible = true;
+					break;
+				case "Mesa" :
+					Lista_Trabajos.Mesa_Roto.visible = true;
+					break;
+				case "Taburete" :
+					Lista_Trabajos.Taburete_Roto.visible = true;
+					break;
+				case "Mesa de Luz" :
+					Lista_Trabajos.Luz_Roto.visible = true;
+					break;
+				case "Mesita" :
+					Lista_Trabajos.Mesita_Roto.visible = true;
+					break;
+			}
 
 		}
 
@@ -655,6 +695,8 @@
 			Lista_Trabajos.Array_Trabajos3.text = Trabajos[3];
 			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
+
+
 
 		// Se pone a hacer el trabajo
 
@@ -680,7 +722,7 @@
 			var _hora_trabajo = _timer_trabajo.currentCount;//variable local para comparar en el array
 			if (_hora_trabajo == Tiempo_total_arreglo)
 			{
-				trace("laburo");// pa probar
+				//trace("laburo");// pa probar
 				_timer_trabajo.stop();
 				_timer_trabajo.reset();
 				Trabajo_en_Curso = false;//flag
