@@ -108,6 +108,7 @@
 		var Trabajos:Array = new Array ();
 		var Tiempo_construccion = 1000;
 		var Tiempo_total_arreglo = 0;
+		var Producto_Viejo = 0;
 
 		// flags
 		var Trabajo_en_Curso = false;
@@ -178,12 +179,12 @@
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
 			Financiera_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera);
 			Placa_financiera.btn_cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera_Cerrar);
-			Lista_Trabajos.Array_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			/*Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos2.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos3.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 			Lista_Trabajos.Array_Trabajos4.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);*/
 			
 			Barrio.Comunidad_Cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnComunidad);
 			Comunidad_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnBarrio_Comunidad);
@@ -321,6 +322,9 @@
 		{
 			var Cliente_Texto =((randomRange(5,6)));// elige el texto del array
 			var nombre_numero =((randomRange(0,4)));// elige el producto del array
+			if (Producto_Viejo == nombre_numero){
+				fnCliente_Actual()
+			}
 			nombre = Elementos[nombre_numero];
 			//trace(nombre);
 			Viejo_Cliente = Nuevo_Cliente;
