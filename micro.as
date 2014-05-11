@@ -106,7 +106,7 @@
 		var Mesa:Array = new Array(1000,2,3,8,"Mesa","necesito me arregles la mesa","Que mierda","");
 		var Taburete:Array = new Array(800,2,3,8,"Taburete","necesito me arregles el Taburete","Upiis","");
 		var Reposera:Array = new Array(1300,2,3,8,"Mesa de Luz","necesito me arregles la Reposera","Que mierda","");
-		var Nombres_Clientes:Array = new Array("Martín","Lucía","Julio","Olga","Andrea","Gustavo");
+		var Nombres_Clientes:Array = new Array("Martín","Olga","Lucía","Andrea","Julio","Gustavo");
 
 		var Elementos:Array = new Array(Silla,Mesa,Cama,Taburete,Reposera);
 		var nombre = 0;// extrae el nombre de los productos del array de productos  Elementos
@@ -198,30 +198,41 @@
 			Ir_Barraca.addEventListener(MouseEvent.MOUSE_DOWN, En_Barraca);
 			Ir_Madera.addEventListener(MouseEvent.MOUSE_DOWN, En_Madera);
 			Lista_Trabajos.Cerrar_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnCerrarLista);
-			Financiera_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera);
+			//Financiera_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera);
 			Placa_financiera.btn_cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnPlaca_Financiera_Cerrar);
-			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			/*Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos2.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos3.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos4.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
-			Lista_Trabajos.Array_Trabajos1.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);*/
+			
+
 
 			Barrio.Comunidad_Cerrar.addEventListener(MouseEvent.MOUSE_DOWN, fnComunidad);
-			Comunidad_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnBarrio_Comunidad);
+			//this.Comunidad_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnBarrio_Comunidad);
 
 
 			Ir_Pantalla_Trabajos_BT.addEventListener(MouseEvent.MOUSE_DOWN, fnTrabajos);
+			//detecta botones en la pantalla trabajos;
+			this.addEventListener(MouseEvent.MOUSE_DOWN, fnBotonesStage);
+			//detecta botones en el escenario;
 			trace(nombre);
 			// timer;
 			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 		}
 
-		function fnPlaca_Financiera(event:MouseEvent):void
+		//acciones botones escenario
+
+		function fnBotonesStage(event:MouseEvent):void
 		{
-			Placa_financiera.visible = true;
+			//trace(event.target.name, event.currentTarget.name);
+			switch (event.target.name)
+			{
+				case "Financiera_BT" :
+					Placa_financiera.visible = true;
+					break;
+				case "Comunidad_BT" :
+					Barrio.visible = true;
+					break;
+			}
 		}
+
 
 		function fnPlaca_Financiera_Cerrar(event:MouseEvent):void
 		{
@@ -252,6 +263,7 @@
 			//trace("avance laburo" + _timer_trabajo.currentCount);
 			//trace("tiempo  " + Tiempo_total_arreglo);
 			//actualizar valores de la pantalla
+			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
 
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = Comunidad_var;
@@ -264,7 +276,6 @@
 			Placa_financiera.txt_total_gastos.text = String(Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco);
 			var Gastos = Sueldos + Gastos_Personales + Gastos_Fijos + Cuota_Banco;
 			Placa_financiera.txt_saldo.text = String (Dinero_var - Gastos);
-
 
 
 
@@ -354,7 +365,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 6;
 						Cliente_var = Mormon;
-						Nombre_Cliente = 1;
+						Nombre_Cliente = 0;
 						Mover_cliente();
 						fnTexto_Pedido();
 						break;
@@ -363,7 +374,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 10;
 						Cliente_var = Vieja;
-						Nombre_Cliente = 2;
+						Nombre_Cliente = 1;
 						Mover_cliente();
 						fnTexto_Pedido();
 						break;
@@ -373,7 +384,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 4;
 						Cliente_var = Nena;
-						Nombre_Cliente = 3;
+						Nombre_Cliente = 2;
 						Mover_cliente();
 						fnTexto_Pedido();
 						break;
@@ -383,7 +394,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 7;
 						Cliente_var = Coqueta;
-						Nombre_Cliente = 4;
+						Nombre_Cliente = 3;
 						Mover_cliente();
 						fnTexto_Pedido();
 						break;
@@ -393,7 +404,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 6;
 						Cliente_var = Punk;
-						Nombre_Cliente = 5;
+						Nombre_Cliente = 4;
 
 						Mover_cliente();
 						fnTexto_Pedido();
@@ -404,7 +415,7 @@
 						Placa_Clientes.Cliente_TXT.text = nombre[Cliente_Texto];
 						Velocidad_var = 10;
 						Cliente_var = Viejo;
-						Nombre_Cliente = 6;
+						Nombre_Cliente = 5;
 						Mover_cliente();
 						fnTexto_Pedido();
 						break;
@@ -452,16 +463,7 @@
 			Clientes[Trabajos_Lista_Clientes] = Nombres_Clientes[Nombre_Cliente];
 			Trabajos_Lista_Clientes = Trabajos_Lista_Clientes + 1;
 
-			trace(Trabajos[0]);
-			trace(Trabajos[1]);
-			trace(Trabajos[2]);
-			trace(Trabajos[3]);
-			trace(Trabajos[4]);
-			trace(Trabajos[5]);
-			trace(Trabajos[6]);
-			trace(Trabajos[7]);
-			trace(Trabajos[8]);
-			trace(Trabajos[9]);
+
 			trace("numero de lista   " + Trabajos_Lista_Clientes);
 			Placa_Clientes.visible = false;
 			Placa_Clientes.Mormon_MC.visible = false;
@@ -621,6 +623,10 @@
 					Tiempo_total_arreglo = coso[3];
 					fnLista_Trabajos();
 					break;
+				case "Arreglar_BT" :
+					fnEmpezarLaburo();
+					break;
+
 
 			}
 		}
@@ -698,7 +704,7 @@
 			Lista_Trabajos.Array_Trabajos.text = Trabajos[0];
 			Lista_Trabajos.Array_Trabajos1.text = Trabajos[1];
 			Lista_Trabajos.Array_Trabajos2.text = Trabajos[2];
-			Lista_Trabajos.Array_Trabajos3.text = Trabajos[2];
+			Lista_Trabajos.Array_Trabajos3.text = Trabajos[3];
 			Lista_Trabajos.Array_Trabajos4.text = Trabajos[4];
 		}
 
@@ -708,15 +714,19 @@
 
 		public function fnEmpezarLaburo():void
 		{
+			trace (Tiempo_total_arreglo);
+			trace (Trabajo_en_Curso);
 			if (Trabajo_en_Curso == false)
 			{
+				trace ("Empezamos");
+				
 				_timer_trabajo.start();
 				//Lista_Trabajos.addChild(Empezar_Laburo_BT);
 				//Empezar_Laburo_BT.x = -300;
 				//Empezar_Laburo_BT.y = 0;
 				Trabajo_en_Curso = true;// flag
 				//Tiempo_total_arreglo = nombre [3];
-				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,40,300,Tiempo_total_arreglo,true);
+				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,200,500,Tiempo_total_arreglo,true);
 			}
 		}
 
