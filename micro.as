@@ -115,9 +115,10 @@
 		//var Trabajos:Array = new Array(20);
 		var Trabajos:Array = [];
 		var Tiempo_construccion = 1000;
-		var Tiempo_total_arreglo = 0;
+		var Tiempo_total_arreglo = 3;
 		var Producto_Viejo = 100;
 		var Trabajos_Lista_Clientes = 0;
+		var Tiempo_Arreglo_Actual = 0;
 
 		// flags
 		var Trabajo_en_Curso = false;
@@ -213,7 +214,7 @@
 			//detecta botones en el escenario;
 			trace(nombre);
 			// timer;
-			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
+			
 			_timer.addEventListener(TimerEvent.TIMER, timerListener);
 		}
 
@@ -256,6 +257,7 @@
 		function timerListener(e:TimerEvent):void
 		{
 			var tiempost = _timer.currentCount;
+			_timer_trabajo.addEventListener(TimerEvent.TIMER, timerListenerTrabajos);
 			//trace(tiempost);
 			Hora_var = _timer.currentCount;
 			Horas.text = String(_timer.currentCount) + "  horas";
@@ -264,6 +266,7 @@
 			//trace("tiempo  " + Tiempo_total_arreglo);
 			//actualizar valores de la pantalla
 			Lista_Trabajos.addEventListener(MouseEvent.MOUSE_DOWN, fnBotones_Trabajos);
+			trace (Trabajo_en_Curso);
 
 			Dinero.text = String(Dinero_var);
 			Comunidad.text = Comunidad_var;
@@ -624,7 +627,9 @@
 					fnLista_Trabajos();
 					break;
 				case "Arreglar_BT" :
+				//trace (Trabajos [1] [4]);
 					fnEmpezarLaburo();
+					
 					break;
 
 
@@ -715,7 +720,7 @@
 		public function fnEmpezarLaburo():void
 		{
 			trace (Tiempo_total_arreglo);
-			trace (Trabajo_en_Curso);
+			
 			if (Trabajo_en_Curso == false)
 			{
 				trace ("Empezamos");
@@ -726,7 +731,8 @@
 				//Empezar_Laburo_BT.y = 0;
 				Trabajo_en_Curso = true;// flag
 				//Tiempo_total_arreglo = nombre [3];
-				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,200,500,Tiempo_total_arreglo,true);
+				var myTween:Tween = new Tween(Lista_Trabajos.my_box,"x",None.easeInOut,300,500,Tiempo_total_arreglo,true);
+				Tiempo_Arreglo_Actual = Tiempo_total_arreglo;
 			}
 		}
 
@@ -735,15 +741,16 @@
 
 		function timerListenerTrabajos(e:TimerEvent):void
 		{
+			trace ("tiempo  " + Tiempo_Arreglo_Actual);
 			var _hora_trabajo = _timer_trabajo.currentCount;//variable local para comparar en el array
-			if (_hora_trabajo == Tiempo_total_arreglo)
+			if (_hora_trabajo == Tiempo_Arreglo_Actual)
 			{
 				//trace("laburo");// pa probar
 				_timer_trabajo.stop();
 				_timer_trabajo.reset();
 				Trabajo_en_Curso = false;//flag
 				Dinero_var = Silla[0] + Dinero_var;
-				Tiempo_total_arreglo = 0;
+				Tiempo_Arreglo_Actual = 0;
 				//Dinero.text = String(Dinero_var);
 			}
 		}
